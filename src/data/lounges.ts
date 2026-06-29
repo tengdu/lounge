@@ -804,17 +804,6 @@ export const lounges: Lounge[] = [
     "imageUrl": "/images/lounges/lounge_tropical.jpg"
   },
   {
-    "id": "jfk-alaska-lounge-terminal-7",
-    "name": "Alaska Lounge",
-    "airportCode": "JFK",
-    "airportCity": "New York",
-    "location": "Terminal 7",
-    "description": "A premium Alaska Lounge located at JFK Terminal 7. Enjoy comfortable seating, complimentary beverages, snacks, and a quiet place to relax before your flight.",
-    "rating": 4.1,
-    "accessInstructions": "Alaska Lounge members.",
-    "imageUrl": "/images/lounges/lounge_view.jpg"
-  },
-  {
     "id": "jfk-centurion-lounge-terminal-4",
     "name": "Centurion Lounge",
     "airportCode": "JFK",
