@@ -2287,5 +2287,71 @@ export const lounges: Lounge[] = [
     "rating": 4.1,
     "accessInstructions": "Priority Pass and day pass purchase.",
     "imageUrl": "/images/lounges/lounge_view.jpg"
+  },
+  {
+    "id": "lga-chase-sapphire-lounge-terminal-b",
+    "name": "Chase Sapphire Lounge",
+    "airportCode": "LGA",
+    "airportCity": "New York",
+    "location": "Terminal B",
+    "description": "A premium Chase Sapphire Lounge located at LGA Terminal B. Enjoy comfortable seating, complimentary beverages, snacks, and a quiet place to relax before your flight.",
+    "rating": 4.8,
+    "accessInstructions": "Chase Sapphire Reserve cardholders.",
+    "imageUrl": "/images/lounges/lounge_modern.jpg"
+  },
+  {
+    "id": "las-chase-sapphire-lounge-terminal-1",
+    "name": "Chase Sapphire Lounge",
+    "airportCode": "LAS",
+    "airportCity": "Las Vegas",
+    "location": "Terminal 1",
+    "description": "A premium Chase Sapphire Lounge located at LAS Terminal 1. Enjoy comfortable seating, complimentary beverages, snacks, and a quiet place to relax before your flight.",
+    "rating": 4.8,
+    "accessInstructions": "Chase Sapphire Reserve cardholders.",
+    "imageUrl": "/images/lounges/lounge_express.jpg"
+  },
+  {
+    "id": "phl-chase-sapphire-lounge-terminal-a",
+    "name": "Chase Sapphire Lounge",
+    "airportCode": "PHL",
+    "airportCity": "Philadelphia",
+    "location": "Terminal A-West",
+    "description": "A premium Chase Sapphire Lounge located at PHL Terminal A-West. Enjoy comfortable seating, complimentary beverages, snacks, and a quiet place to relax before your flight.",
+    "rating": 4.8,
+    "accessInstructions": "Chase Sapphire Reserve cardholders.",
+    "imageUrl": "/images/lounges/lounge_classic.jpg"
+  },
+  {
+    "id": "phx-chase-sapphire-lounge-terminal-4",
+    "name": "Chase Sapphire Lounge",
+    "airportCode": "PHX",
+    "airportCity": "Phoenix",
+    "location": "Terminal 4",
+    "description": "A premium Chase Sapphire Lounge located at PHX Terminal 4. Enjoy comfortable seating, complimentary beverages, snacks, and a quiet place to relax before your flight.",
+    "rating": 4.8,
+    "accessInstructions": "Chase Sapphire Reserve cardholders.",
+    "imageUrl": "/images/lounges/lounge_tropical.jpg"
+  },
+  {
+    "id": "san-chase-sapphire-lounge-terminal-2",
+    "name": "Chase Sapphire Lounge",
+    "airportCode": "SAN",
+    "airportCity": "San Diego",
+    "location": "Terminal 2",
+    "description": "A premium Chase Sapphire Lounge located at SAN Terminal 2. Enjoy comfortable seating, complimentary beverages, snacks, and a quiet place to relax before your flight.",
+    "rating": 4.8,
+    "accessInstructions": "Chase Sapphire Reserve cardholders.",
+    "imageUrl": "/images/lounges/lounge_view.jpg"
+  },
+  {
+    "id": "iad-chase-sapphire-lounge-etihad",
+    "name": "Chase Sapphire Lounge (Etihad)",
+    "airportCode": "IAD",
+    "airportCity": "Washington D.C.",
+    "location": "Terminal A",
+    "description": "A premium Chase Sapphire Lounge in partnership with Etihad Airways located at IAD Terminal A. Enjoy comfortable seating, complimentary beverages, snacks, and a quiet place to relax.",
+    "rating": 4.7,
+    "accessInstructions": "Chase Sapphire Reserve cardholders.",
+    "imageUrl": "/images/lounges/lounge_premium.jpg"
   }
 ];
