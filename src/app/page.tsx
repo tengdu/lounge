@@ -62,10 +62,10 @@ export default function Home() {
             Premium Travel Experience
           </span>
           <h1 className="text-5xl md:text-7xl font-extrabold mb-6 tracking-tight">
-            Discover Your <br className="hidden md:block"/> Pre-Flight <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-200 to-cyan-200">Oasis</span>
+            Elevate Your <br className="hidden md:block"/> Travel <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-200 to-cyan-200">Experience</span>
           </h1>
           <p className="text-lg md:text-xl text-blue-100/80 max-w-2xl mx-auto font-light leading-relaxed">
-            Find and explore the world's most luxurious airport lounges. Search by city, code, or airline to begin your journey in comfort.
+            Unlock access to the world's most exclusive airport lounges. Relax, dine, and refresh before your next flight.
           </p>
         </div>
       </header>
