@@ -2353,5 +2353,60 @@ export const lounges: Lounge[] = [
     "rating": 4.7,
     "accessInstructions": "Chase Sapphire Reserve cardholders.",
     "imageUrl": "/images/lounges/lounge_premium.jpg"
+  },
+  {
+    "id": "lga-centurion-lounge-terminal-b",
+    "name": "The Centurion Lounge",
+    "airportCode": "LGA",
+    "airportCity": "New York",
+    "location": "Terminal B, post-security",
+    "description": "Premium lounge by American Express offering chef-crafted cuisine, premium cocktails, and a quiet place to relax.",
+    "rating": 4.6,
+    "accessInstructions": "Amex Platinum and Centurion cardholders.",
+    "imageUrl": "https://www.aexp-static.com/s3/loungmtir-e3-cms/LGA_Centurion_Lounge_LG_0147ba7793.jpg"
+  },
+  {
+    "id": "slc-centurion-lounge-concourse-b",
+    "name": "The Centurion Lounge",
+    "airportCode": "SLC",
+    "airportCity": "Salt Lake City",
+    "location": "Concourse B, post-security",
+    "description": "Premium lounge by American Express featuring an outdoor terrace and sweeping views of the airfield and mountains.",
+    "rating": 4.7,
+    "accessInstructions": "Amex Platinum and Centurion cardholders.",
+    "imageUrl": "https://www.aexp-static.com/s3/loungmtir-e3-cms/SLC_Profile_Photo_e8556ceefc.jpg"
+  },
+  {
+    "id": "dca-centurion-lounge-terminal-2",
+    "name": "The Centurion Lounge",
+    "airportCode": "DCA",
+    "airportCity": "Washington D.C.",
+    "location": "Terminal 2, post-security",
+    "description": "Premium American Express lounge offering a refined atmosphere, locally inspired dishes, and craft cocktails.",
+    "rating": 4.7,
+    "accessInstructions": "Amex Platinum and Centurion cardholders.",
+    "imageUrl": "https://www.aexp-static.com/s3/loungmtir-e3-cms/international_bg_55919d45af.jpg"
+  },
+  {
+    "id": "lhr-centurion-lounge-terminal-3",
+    "name": "The Centurion Lounge",
+    "airportCode": "LHR",
+    "airportCity": "London",
+    "location": "Terminal 3, post-security",
+    "description": "Premium American Express lounge offering signature cocktails, British-inspired cuisine, and luxury amenities.",
+    "rating": 4.8,
+    "accessInstructions": "Amex Platinum and Centurion cardholders.",
+    "imageUrl": "https://www.aexp-static.com/s3/loungmtir-e3-cms/LHR_Centurion_Lounge_LG_d5f51f3dc8.jpg"
+  },
+  {
+    "id": "hkg-centurion-lounge-terminal-1",
+    "name": "The Centurion Lounge",
+    "airportCode": "HKG",
+    "airportCity": "Hong Kong",
+    "location": "Terminal 1, Level 7",
+    "description": "Premium American Express lounge offering dim sum, a premium bar, and expansive views of the tarmac.",
+    "rating": 4.8,
+    "accessInstructions": "Amex Platinum and Centurion cardholders.",
+    "imageUrl": "https://www.aexp-static.com/s3/loungmtir-e3-cms/map_8fc0a39169.png"
   }
 ];
