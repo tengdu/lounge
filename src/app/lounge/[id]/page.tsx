@@ -44,7 +44,7 @@ export default async function LoungeDetailPage({
       <div className="relative w-full h-[50vh] md:h-[65vh]">
         <div className="absolute inset-0 z-10 bg-gradient-to-b from-black/60 via-black/20 to-[#f8fafc]"></div>
         <Image
-          src={lounge.imageUrl}
+          src={`/lounge${lounge.imageUrl}`}
           alt={lounge.name}
           fill
           priority

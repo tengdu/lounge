@@ -18,7 +18,7 @@ export default function LoungeCard({ lounge }: LoungeCardProps) {
 
         <div className="relative w-full h-56 overflow-hidden">
           <Image
-            src={lounge.imageUrl}
+            src={`/lounge${lounge.imageUrl}`}
             alt={lounge.name}
             fill
             className="object-cover group-hover:scale-110 transition-transform duration-1000 ease-out"
