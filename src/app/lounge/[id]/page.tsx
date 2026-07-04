@@ -13,6 +13,12 @@ import {
   Bath 
 } from "lucide-react";
 
+export async function generateStaticParams() {
+  return lounges.map((lounge) => ({
+    id: lounge.id,
+  }));
+}
+
 export default async function LoungeDetailPage({ 
   params 
 }: { 
