@@ -5,7 +5,20 @@ import SearchBar from "@/components/SearchBar";
 import LoungeList from "@/components/LoungeList";
 import { lounges } from "@/data/lounges";
 
-const QUICK_FILTERS = ["All", "SEA", "JFK", "SFO", "LHR", "Delta", "Centurion", "Alaska"];
+const QUICK_FILTERS = [
+  "All",
+  "JFK",
+  "LAX",
+  "SFO",
+  "ORD",
+  "DFW",
+  "SEA",
+  "Delta",
+  "United",
+  "Admirals",
+  "Centurion",
+  "Alaska",
+];
 
 export default function Home() {
   const [searchTerm, setSearchTerm] = useState("");
