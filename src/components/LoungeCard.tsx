@@ -1,70 +1,53 @@
-import React from 'react';
-import Image from 'next/image';
-import Link from 'next/link';
-import { MapPin, Star, ShieldCheck, ArrowRight } from 'lucide-react';
-import { Lounge } from '@/data/lounges';
+import Image from "next/image";
+import Link from "next/link";
+import { Lounge } from "@/data/lounges";
+import { blurFor, cardSrc, withBasePath } from "@/lib/images";
 
 interface LoungeCardProps {
   lounge: Lounge;
+  /** Cards in the first visible row load eagerly; the rest stay lazy. */
+  eager?: boolean;
 }
 
-export default function LoungeCard({ lounge }: LoungeCardProps) {
-  return (
-    <Link href={`/lounge/${lounge.id}`} className="block h-full group">
-      <div className="flex flex-col h-full bg-white rounded-2xl shadow-sm border border-gray-100 group-hover:shadow-xl group-hover:-translate-y-1 transition-all duration-500 overflow-hidden relative">
-        
-        {/* Subtle highlight bar at the top that appears on hover */}
-        <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-blue-400 to-cyan-400 opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10"></div>
+export default function LoungeCard({ lounge, eager = false }: LoungeCardProps) {
+  const blur = blurFor(lounge.imageUrl);
 
-        <div className="relative w-full h-56 overflow-hidden">
-          <Image
-            src={`/lounge${lounge.imageUrl}`}
-            alt={lounge.name}
-            fill
-            className="object-cover group-hover:scale-110 transition-transform duration-1000 ease-out"
-            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-transparent opacity-90 group-hover:opacity-100 transition-opacity duration-500"></div>
-          <div className="absolute bottom-5 left-5 right-5 flex justify-between items-end">
-            <div className="text-white z-10">
-              <span className="text-[10px] font-black uppercase tracking-widest text-blue-300 mb-1.5 block">
-                {lounge.airportCode} • {lounge.airportCity}
-              </span>
-              <h5 className="text-xl md:text-2xl font-bold leading-tight drop-shadow-lg pr-4">{lounge.name}</h5>
-            </div>
-            <div className="flex items-center gap-1.5 bg-white/20 backdrop-blur-md px-2.5 py-1.5 rounded-xl text-white border border-white/30 shadow-sm z-10 shrink-0">
-              <Star size={14} className="fill-yellow-400 text-yellow-400 drop-shadow-sm" />
-              <span className="text-sm font-bold">{lounge.rating}</span>
-            </div>
-          </div>
+  return (
+    <Link
+      href={`/lounge/${lounge.id}`}
+      className="group block rounded-[18px] bg-surface ring-1 ring-hairline transition-[transform,box-shadow] duration-500 ease-[cubic-bezier(0.25,0.1,0.25,1)] hover:-translate-y-1 hover:shadow-[0_12px_32px_rgb(0_0_0_/_0.10)]"
+    >
+      <div className="relative aspect-[3/2] overflow-hidden rounded-t-[18px] bg-surface-sunken">
+        <Image
+          src={withBasePath(cardSrc(lounge.imageUrl))}
+          alt={lounge.hasRealPhoto ? `Inside the ${lounge.name} at ${lounge.airportCode}` : ""}
+          fill
+          loading={eager ? "eager" : "lazy"}
+          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+          placeholder={blur ? "blur" : "empty"}
+          blurDataURL={blur}
+          className="object-cover transition-transform duration-700 ease-[cubic-bezier(0.25,0.1,0.25,1)] group-hover:scale-[1.04]"
+        />
+      </div>
+
+      <div className="p-5">
+        <div className="mb-2 flex items-center gap-2 text-[12px] font-medium tracking-[0.04em] text-ink-tertiary uppercase">
+          <span className="text-accent">{lounge.airportCode}</span>
+          <span aria-hidden="true">·</span>
+          <span className="truncate">{lounge.airportCity}</span>
         </div>
-        
-        <div className="p-6 flex flex-col flex-grow bg-white relative z-10">
-          <div className="flex items-start gap-2.5 mb-4 text-gray-600">
-            <div className="bg-blue-50 p-1.5 rounded-lg mt-0.5 shrink-0 group-hover:bg-blue-100 transition-colors">
-              <MapPin size={14} className="text-blue-500" />
-            </div>
-            <p className="text-sm font-medium leading-snug">{lounge.location}</p>
-          </div>
-          
-          <p className="text-gray-500 mb-6 flex-grow text-sm leading-relaxed line-clamp-3 font-light">
-            {lounge.description}
-          </p>
-          
-          <div className="mt-auto pt-5 border-t border-gray-100 flex items-center justify-between">
-            <div className="flex-1 pr-4">
-              <div className="flex items-center gap-2 mb-1.5">
-                <ShieldCheck size={14} className="text-emerald-500" />
-                <h6 className="text-[10px] font-black text-gray-400 uppercase tracking-widest">Access Required</h6>
-              </div>
-              <p className="text-xs text-gray-700 leading-snug line-clamp-1 font-medium">{lounge.accessInstructions}</p>
-            </div>
-            
-            {/* View Details Button that slides in on hover */}
-            <div className="w-10 h-10 rounded-full bg-blue-50 flex items-center justify-center shrink-0 text-blue-600 group-hover:bg-blue-600 group-hover:text-white transition-colors duration-300 shadow-sm">
-              <ArrowRight size={18} className="group-hover:translate-x-0.5 transition-transform" />
-            </div>
-          </div>
+
+        <h3 className="text-title mb-1.5 text-[19px] text-ink">{lounge.name}</h3>
+
+        <p className="line-clamp-2 text-[14px] leading-[1.45] text-ink-secondary">{lounge.location}</p>
+
+        <div className="mt-4 flex items-center justify-between border-t border-hairline pt-3.5">
+          <span className="truncate pr-3 text-[13px] text-ink-tertiary">
+            {lounge.amenities.length} amenities
+          </span>
+          <span className="shrink-0 text-[13px] font-medium tabular-nums text-ink-secondary">
+            {lounge.rating.toFixed(1)}
+          </span>
         </div>
       </div>
     </Link>

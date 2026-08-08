@@ -1,130 +1,159 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useMemo, useState } from "react";
 import SearchBar from "@/components/SearchBar";
 import LoungeList from "@/components/LoungeList";
-import { lounges } from "@/data/lounges";
+import { lounges, type Lounge } from "@/data/lounges";
 
-const QUICK_FILTERS = [
-  "All",
-  "JFK",
-  "LAX",
-  "SFO",
-  "ORD",
-  "DFW",
-  "SEA",
-  "Delta",
-  "United",
-  "Admirals",
-  "Centurion",
-  "Alaska",
+/**
+ * Airport filters match the code exactly; brand filters match the name.
+ * Without that split, "SEA" also matches JFK's *Chel*sea* Lounge.
+ */
+const FILTERS: { label: string; kind: "all" | "airport" | "brand" }[] = [
+  { label: "All", kind: "all" },
+  { label: "JFK", kind: "airport" },
+  { label: "LAX", kind: "airport" },
+  { label: "SFO", kind: "airport" },
+  { label: "ORD", kind: "airport" },
+  { label: "DFW", kind: "airport" },
+  { label: "ATL", kind: "airport" },
+  { label: "SEA", kind: "airport" },
+  { label: "Delta", kind: "brand" },
+  { label: "United", kind: "brand" },
+  { label: "Admirals", kind: "brand" },
+  { label: "Centurion", kind: "brand" },
+  { label: "Alaska", kind: "brand" },
 ];
+
+const AIRPORT_COUNT = new Set(lounges.map((l) => l.airportCode)).size;
+
+/**
+ * Lower is better. Without this an airport code like "sea" ranks Chelsea
+ * Lounge alongside Seattle, because every field was a plain substring test.
+ */
+function rank(lounge: Lounge, term: string): number {
+  const code = lounge.airportCode.toLowerCase();
+  const city = lounge.airportCity.toLowerCase();
+  const name = lounge.name.toLowerCase();
+
+  if (code === term) return 0;
+  if (city === term) return 1;
+  if (city.startsWith(term)) return 2;
+  if (name.startsWith(term)) return 3;
+  if (city.includes(term)) return 4;
+  if (name.includes(term)) return 5;
+  if (lounge.location.toLowerCase().includes(term)) return 6;
+  return Number.POSITIVE_INFINITY;
+}
 
 export default function Home() {
   const [searchTerm, setSearchTerm] = useState("");
-  const [activeFilter, setActiveFilter] = useState("All");
+  const [activeFilter, setActiveFilter] = useState<string>("All");
 
   const filteredLounges = useMemo(() => {
-    let filtered = lounges;
+    let result = lounges;
 
-    // Apply quick filter
-    if (activeFilter !== "All") {
-       const filterLower = activeFilter.toLowerCase();
-       filtered = filtered.filter(l => 
-         l.airportCode.toLowerCase() === filterLower || 
-         l.name.toLowerCase().includes(filterLower)
-       );
+    const filter = FILTERS.find((f) => f.label === activeFilter);
+    if (filter && filter.kind !== "all") {
+      const needle = filter.label.toLowerCase();
+      result =
+        filter.kind === "airport"
+          ? result.filter((l) => l.airportCode.toLowerCase() === needle)
+          : result.filter((l) => l.name.toLowerCase().includes(needle));
     }
 
-    // Apply search term
-    if (searchTerm.trim()) {
-      const term = searchTerm.toLowerCase();
-      filtered = filtered.filter((lounge) => {
-        return (
-          lounge.name.toLowerCase().includes(term) ||
-          lounge.airportCity.toLowerCase().includes(term) ||
-          lounge.airportCode.toLowerCase().includes(term)
-        );
-      });
+    const term = searchTerm.trim().toLowerCase();
+    if (term) {
+      result = result
+        .map((lounge) => ({ lounge, score: rank(lounge, term) }))
+        .filter((entry) => Number.isFinite(entry.score))
+        .sort((a, b) => a.score - b.score)
+        .map((entry) => entry.lounge);
     }
 
-    return filtered;
+    return result;
   }, [searchTerm, activeFilter]);
 
-  const handleFilterClick = (filter: string) => {
-    if (activeFilter === filter) {
-      setActiveFilter("All");
-    } else {
-      setActiveFilter(filter);
-    }
-    setSearchTerm(""); // Clear search term when a quick filter is clicked
+  const handleFilter = (filter: string) => {
+    setActiveFilter((current) => (current === filter ? "All" : filter));
+    setSearchTerm("");
   };
 
   return (
-    <div className="min-h-screen bg-[#f8fafc] text-gray-900 font-[family-name:var(--font-geist-sans)] selection:bg-blue-200">
-      <header className="relative bg-gradient-to-br from-slate-900 via-blue-900 to-indigo-900 text-white pt-24 pb-32 px-4 overflow-hidden">
-        {/* Abstract background shapes for depth */}
-        <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
-          <div className="absolute -top-24 -right-24 w-96 h-96 rounded-full bg-blue-500/10 blur-3xl"></div>
-          <div className="absolute bottom-0 left-1/4 w-64 h-64 rounded-full bg-indigo-500/20 blur-3xl"></div>
-          <div className="absolute top-1/2 -left-12 w-48 h-48 rounded-full bg-cyan-500/10 blur-2xl"></div>
-        </div>
-
-        <div className="max-w-7xl mx-auto text-center relative z-10 animate-in fade-in slide-in-from-bottom-4 duration-700">
-          <span className="inline-block py-1.5 px-4 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-xs font-semibold tracking-widest text-blue-100 uppercase mb-6 shadow-sm">
-            Premium Travel Experience
+    <>
+      <header className="sticky top-0 z-50 border-b border-hairline bg-canvas/72 backdrop-blur-xl backdrop-saturate-150">
+        <div className="mx-auto flex h-12 max-w-6xl items-center justify-between px-5">
+          <span className="text-[17px] font-semibold tracking-[-0.02em] text-ink">Lounge</span>
+          <span className="text-[12px] text-ink-tertiary">
+            {lounges.length} lounges · {AIRPORT_COUNT} airports
           </span>
-          <h1 className="text-5xl md:text-7xl font-extrabold mb-6 tracking-tight">
-            Elevate Your <br className="hidden md:block"/> Travel <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-200 to-cyan-200">Experience</span>
-          </h1>
-          <p className="text-lg md:text-xl text-blue-100/80 max-w-2xl mx-auto font-light leading-relaxed">
-            Unlock access to the world's most exclusive airport lounges. Relax, dine, and refresh before your next flight.
-          </p>
         </div>
       </header>
 
-      <main className="max-w-7xl mx-auto px-4 py-8 -mt-20 relative z-20">
-        <SearchBar searchTerm={searchTerm} onSearchChange={setSearchTerm} />
-        
-        {/* Quick Filters */}
-        <div className="flex flex-wrap justify-center gap-2.5 mb-12 max-w-4xl mx-auto">
-          {QUICK_FILTERS.map((filter) => (
-            <button
-              key={filter}
-              onClick={() => handleFilterClick(filter)}
-              className={`px-5 py-2.5 rounded-full text-sm font-semibold transition-all duration-300 ${
-                activeFilter === filter
-                  ? "bg-blue-600 text-white shadow-lg shadow-blue-500/30 border border-blue-600 scale-105"
-                  : "bg-white text-gray-600 border border-gray-200 hover:border-blue-300 hover:bg-blue-50/50 hover:text-blue-600 shadow-sm"
-              }`}
-            >
-              {filter}
-            </button>
-          ))}
+      <main className="mx-auto w-full max-w-6xl flex-1 px-5">
+        <section className="animate-rise pt-20 pb-14 text-center md:pt-28 md:pb-16">
+          <h1 className="text-display mx-auto max-w-3xl text-[44px] text-ink sm:text-[60px] md:text-[76px]">
+            Every lounge.
+            <br />
+            Every airport.
+          </h1>
+          <p className="mx-auto mt-6 max-w-lg text-[19px] leading-[1.45] text-ink-secondary">
+            A complete guide to airport lounges across the United States — where they are, and
+            how to get in.
+          </p>
+
+          <div className="mt-10">
+            <SearchBar searchTerm={searchTerm} onSearchChange={setSearchTerm} />
+          </div>
+        </section>
+
+        <nav aria-label="Quick filters" className="no-scrollbar -mx-5 overflow-x-auto px-5 pb-2">
+          <div className="flex w-max gap-2 pb-1">
+            {FILTERS.map(({ label }) => {
+              const active = activeFilter === label;
+              return (
+                <button
+                  key={label}
+                  type="button"
+                  onClick={() => handleFilter(label)}
+                  aria-pressed={active}
+                  className={`h-9 shrink-0 rounded-full px-4 text-[14px] font-medium transition-colors duration-200 ${
+                    active
+                      ? "bg-ink text-white"
+                      : "bg-surface text-ink-secondary ring-1 ring-hairline hover:text-ink"
+                  }`}
+                >
+                  {label}
+                </button>
+              );
+            })}
+          </div>
+        </nav>
+
+        <div className="mt-10 mb-6 flex items-baseline justify-between">
+          <h2 className="text-title text-[24px] text-ink">
+            {activeFilter === "All" ? "All lounges" : `${activeFilter} lounges`}
+          </h2>
+          <span className="text-[13px] tabular-nums text-ink-tertiary">
+            {filteredLounges.length}{" "}
+            {filteredLounges.length === 1 ? "result" : "results"}
+          </span>
         </div>
 
-        <div className="mt-8 animate-in fade-in duration-700 delay-150">
-          <div className="flex justify-between items-end mb-8 px-2 border-b border-gray-200 pb-4">
-            <h2 className="text-2xl font-bold text-gray-800">
-              {activeFilter !== "All" ? `${activeFilter} Lounges` : "Featured Lounges"}
-            </h2>
-            <span className="text-sm font-bold text-blue-600 bg-blue-50 px-3.5 py-1.5 rounded-full shadow-sm border border-blue-100">
-              {filteredLounges.length} {filteredLounges.length === 1 ? 'Location' : 'Locations'}
-            </span>
-          </div>
-          
-          <LoungeList lounges={filteredLounges} />
-        </div>
+        <LoungeList lounges={filteredLounges} />
       </main>
 
-      <footer className="bg-white border-t border-gray-100 text-gray-500 text-center py-12 mt-20">
-        <div className="max-w-7xl mx-auto px-4 flex flex-col items-center">
-          <div className="w-12 h-12 bg-blue-50 rounded-2xl flex items-center justify-center mb-5 rotate-3 hover:rotate-0 transition-transform">
-             <span className="text-blue-600 font-black text-2xl">L</span>
-          </div>
-          <p className="text-sm font-medium text-gray-400">© {new Date().getFullYear()} Lounge Finder. Designed for the modern traveler.</p>
+      <footer className="mt-24 border-t border-hairline">
+        <div className="mx-auto max-w-6xl px-5 py-10">
+          <p className="text-[12px] leading-relaxed text-ink-tertiary">
+            Lounge locations and access rules change frequently — confirm with your airline or
+            lounge operator before you travel.
+          </p>
+          <p className="mt-3 text-[12px] text-ink-tertiary">
+            © {new Date().getFullYear()} Lounge
+          </p>
         </div>
       </footer>
-    </div>
+    </>
   );
 }

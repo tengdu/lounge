@@ -1,28 +1,79 @@
+import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
-import { lounges } from "@/data/lounges";
-import { 
-  ArrowLeft, 
-  MapPin, 
-  Star, 
-  ShieldCheck, 
-  Wifi, 
-  Coffee, 
-  Wine, 
-  Bath 
+import {
+  ArrowLeft,
+  Baby,
+  BedDouble,
+  ChefHat,
+  Coffee,
+  Dumbbell,
+  Laptop,
+  Luggage,
+  Moon,
+  Plane,
+  Plug,
+  Presentation,
+  ShieldCheck,
+  ShowerHead,
+  Sparkles,
+  Sun,
+  Ticket,
+  Utensils,
+  Wifi,
+  Wine,
+  type LucideIcon,
 } from "lucide-react";
+import { AMENITY_CATALOG, lounges, type Amenity } from "@/data/lounges";
+import { blurFor, heroSrc, withBasePath } from "@/lib/images";
 
 export async function generateStaticParams() {
-  return lounges.map((lounge) => ({
-    id: lounge.id,
-  }));
+  return lounges.map((lounge) => ({ id: lounge.id }));
 }
 
-export default async function LoungeDetailPage({ 
-  params 
-}: { 
-  params: Promise<{ id: string }> 
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ id: string }>;
+}): Promise<Metadata> {
+  const { id } = await params;
+  const lounge = lounges.find((l) => l.id === id);
+  if (!lounge) return {};
+
+  const title = `${lounge.name} — ${lounge.airportCode} | Lounge`;
+  return {
+    title,
+    description: lounge.description,
+    openGraph: { title, description: lounge.description },
+  };
+}
+
+const AMENITY_ICONS: Record<Amenity, LucideIcon> = {
+  wifi: Wifi,
+  charging: Plug,
+  dining: Utensils,
+  alacarte: ChefHat,
+  barista: Coffee,
+  bar: Wine,
+  showers: ShowerHead,
+  quiet: Moon,
+  naps: BedDouble,
+  workspace: Laptop,
+  conference: Presentation,
+  family: Baby,
+  terrace: Sun,
+  runway: Plane,
+  spa: Sparkles,
+  fitness: Dumbbell,
+  luggage: Luggage,
+  daypass: Ticket,
+};
+
+export default async function LoungeDetailPage({
+  params,
+}: {
+  params: Promise<{ id: string }>;
 }) {
   const { id } = await params;
   const lounge = lounges.find((l) => l.id === id);
@@ -31,132 +82,157 @@ export default async function LoungeDetailPage({
     notFound();
   }
 
-  // Infer amenities based on description text to create a richer UI
-  const descLower = lounge.description.toLowerCase();
-  const hasWifi = descLower.includes("wi-fi") || descLower.includes("wifi");
-  const hasFood = descLower.includes("food") || descLower.includes("dining") || descLower.includes("cuisine") || descLower.includes("snack") || descLower.includes("buffet") || descLower.includes("pancake");
-  const hasBar = descLower.includes("bar") || descLower.includes("cocktail") || descLower.includes("spirit") || descLower.includes("wine") || descLower.includes("beer");
-  const hasShower = descLower.includes("shower") || descLower.includes("bath");
+  const blur = blurFor(lounge.imageUrl);
+  const has = new Set<Amenity>(lounge.amenities);
+  const available = AMENITY_CATALOG.filter((a) => has.has(a.id));
+  const unavailable = AMENITY_CATALOG.filter((a) => !has.has(a.id));
+
+  const nearby = lounges
+    .filter((l) => l.airportCode === lounge.airportCode && l.id !== lounge.id)
+    .slice(0, 4);
 
   return (
-    <div className="min-h-screen bg-[#f8fafc] text-gray-900 font-[family-name:var(--font-geist-sans)] selection:bg-blue-200 pb-20">
-      {/* Hero Section */}
-      <div className="relative w-full h-[50vh] md:h-[65vh]">
-        <div className="absolute inset-0 z-10 bg-gradient-to-b from-black/60 via-black/20 to-[#f8fafc]"></div>
-        <Image
-          src={`/lounge${lounge.imageUrl}`}
-          alt={lounge.name}
-          fill
-          priority
-          className="object-cover"
-          sizes="100vw"
-        />
-        
-        {/* Top Navigation */}
-        <div className="absolute top-0 left-0 w-full z-20 p-6 md:p-10">
-          <Link 
-            href="/" 
-            className="inline-flex items-center gap-2 px-5 py-2.5 bg-white/10 backdrop-blur-xl border border-white/20 text-white rounded-full hover:bg-white/20 transition-all font-semibold text-sm group shadow-lg"
+    <>
+      <header className="sticky top-0 z-50 border-b border-hairline bg-canvas/72 backdrop-blur-xl backdrop-saturate-150">
+        <div className="mx-auto flex h-12 max-w-5xl items-center px-5">
+          <Link
+            href="/"
+            className="group inline-flex items-center gap-1.5 text-[14px] font-medium text-ink-secondary transition-colors hover:text-ink"
           >
-            <ArrowLeft size={18} className="group-hover:-translate-x-1 transition-transform" />
-            Back to Search
+            <ArrowLeft
+              size={15}
+              className="transition-transform duration-300 group-hover:-translate-x-0.5"
+            />
+            All lounges
           </Link>
         </div>
-      </div>
+      </header>
 
-      {/* Main Content */}
-      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 relative z-30 -mt-32 md:-mt-48">
-        
-        {/* Glassmorphism Header Card */}
-        <div className="bg-white/85 backdrop-blur-2xl rounded-3xl p-8 md:p-12 shadow-2xl border border-white mb-8 flex flex-col md:flex-row gap-8 items-start md:items-end justify-between">
-          <div>
-            <div className="flex items-center gap-3 mb-4">
-              <span className="px-4 py-1.5 bg-blue-100 text-blue-700 font-black tracking-widest uppercase text-xs rounded-full shadow-inner">
-                {lounge.airportCode}
+      <main className="flex-1">
+        <div className="relative h-[42vh] min-h-[280px] w-full overflow-hidden bg-surface-sunken md:h-[54vh]">
+          <Image
+            src={withBasePath(heroSrc(lounge.imageUrl))}
+            alt={lounge.hasRealPhoto ? `Inside the ${lounge.name} at ${lounge.airportCode}` : ""}
+            fill
+            preload
+            sizes="100vw"
+            placeholder={blur ? "blur" : "empty"}
+            blurDataURL={blur}
+            className="object-cover"
+          />
+          <div
+            aria-hidden="true"
+            className="absolute inset-0 bg-gradient-to-t from-canvas via-canvas/10 to-transparent"
+          />
+          {!lounge.hasRealPhoto && (
+            <span className="absolute top-3 right-4 rounded-full bg-black/45 px-2.5 py-1 text-[11px] font-medium text-white/90 backdrop-blur-sm">
+              Illustrative photo
+            </span>
+          )}
+        </div>
+
+        <div className="mx-auto max-w-5xl px-5">
+          <div className="animate-rise -mt-16 md:-mt-24">
+            <div className="mb-3 flex items-center gap-2 text-[13px] font-medium tracking-[0.04em] uppercase">
+              <span className="text-accent">{lounge.airportCode}</span>
+              <span aria-hidden="true" className="text-ink-tertiary">
+                ·
               </span>
-              <span className="text-gray-500 font-bold uppercase tracking-wide text-sm">{lounge.airportCity}</span>
+              <span className="text-ink-tertiary">{lounge.airportCity}</span>
             </div>
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold text-gray-900 tracking-tight leading-tight mb-5">
+
+            <h1 className="text-display max-w-3xl text-[38px] text-ink sm:text-[52px] md:text-[62px]">
               {lounge.name}
             </h1>
-            <div className="flex items-center gap-2 text-gray-600 font-medium bg-gray-100/50 inline-flex px-4 py-2 rounded-xl">
-              <MapPin size={20} className="text-blue-500 shrink-0" />
-              <span className="text-base">{lounge.location}</span>
-            </div>
-          </div>
-          
-          <div className="flex flex-col items-end shrink-0">
-            <div className="flex items-center gap-2 bg-yellow-50 px-5 py-3 rounded-2xl border border-yellow-200 shadow-sm">
-              <Star size={28} className="fill-yellow-400 text-yellow-400" />
-              <span className="text-3xl font-black text-yellow-700">{lounge.rating}</span>
-            </div>
-            <span className="text-xs text-gray-400 mt-3 font-bold uppercase tracking-widest">Traveler Rating</span>
-          </div>
-        </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          {/* Left Column: Description & Amenities */}
-          <div className="lg:col-span-2 space-y-8">
-            <div className="bg-white rounded-3xl p-8 md:p-10 shadow-sm border border-gray-100">
-              <h2 className="text-2xl font-bold text-gray-900 mb-6">The Experience</h2>
-              <p className="text-lg text-gray-600 leading-relaxed font-light">
-                {lounge.description}
-              </p>
-            </div>
-
-            {/* Inferred Amenities */}
-            <div className="bg-white rounded-3xl p-8 md:p-10 shadow-sm border border-gray-100">
-              <h2 className="text-2xl font-bold text-gray-900 mb-8">Amenities included</h2>
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
-                <div className={`flex flex-col items-center justify-center p-6 rounded-2xl border transition-colors ${hasWifi ? 'bg-blue-50 border-blue-100 text-blue-600' : 'bg-gray-50 border-gray-100 text-gray-400 opacity-50'}`}>
-                  <Wifi size={32} className="mb-4" />
-                  <span className="font-bold text-sm tracking-wide">High-Speed Wi-Fi</span>
-                </div>
-                <div className={`flex flex-col items-center justify-center p-6 rounded-2xl border transition-colors ${hasFood ? 'bg-orange-50 border-orange-100 text-orange-600' : 'bg-gray-50 border-gray-100 text-gray-400 opacity-50'}`}>
-                  <Coffee size={32} className="mb-4" />
-                  <span className="font-bold text-sm tracking-wide">Premium Dining</span>
-                </div>
-                <div className={`flex flex-col items-center justify-center p-6 rounded-2xl border transition-colors ${hasBar ? 'bg-purple-50 border-purple-100 text-purple-600' : 'bg-gray-50 border-gray-100 text-gray-400 opacity-50'}`}>
-                  <Wine size={32} className="mb-4" />
-                  <span className="font-bold text-sm tracking-wide">Full Bar</span>
-                </div>
-                <div className={`flex flex-col items-center justify-center p-6 rounded-2xl border transition-colors ${hasShower ? 'bg-cyan-50 border-cyan-100 text-cyan-600' : 'bg-gray-50 border-gray-100 text-gray-400 opacity-50'}`}>
-                  <Bath size={32} className="mb-4" />
-                  <span className="font-bold text-sm tracking-wide">Shower Suites</span>
-                </div>
-              </div>
-            </div>
+            <p className="mt-5 max-w-2xl text-[19px] leading-[1.5] text-ink-secondary">
+              {lounge.location}
+            </p>
           </div>
 
-          {/* Right Column: Access Rules */}
-          <div className="space-y-8">
-            <div className="bg-gradient-to-br from-emerald-500 to-teal-700 rounded-3xl p-8 shadow-xl text-white relative overflow-hidden">
-              {/* Decorative background shape */}
-              <div className="absolute -top-12 -right-12 w-32 h-32 bg-white opacity-10 rounded-full blur-2xl pointer-events-none"></div>
-              
-              <div className="flex items-center gap-3 mb-6">
-                <div className="bg-white/20 p-2 rounded-xl backdrop-blur-sm">
-                  <ShieldCheck size={28} className="text-white" />
+          <div className="mt-14 grid grid-cols-1 gap-x-12 gap-y-12 pb-24 lg:grid-cols-[1fr_320px]">
+            <div className="space-y-12">
+              <section>
+                <h2 className="text-title mb-4 text-[22px] text-ink">Overview</h2>
+                <p className="max-w-2xl text-[17px] leading-[1.6] text-ink-secondary">
+                  {lounge.description}
+                </p>
+              </section>
+
+              <section>
+                <div className="mb-5 flex items-baseline justify-between">
+                  <h2 className="text-title text-[22px] text-ink">Amenities</h2>
+                  <span className="text-[13px] tabular-nums text-ink-tertiary">
+                    {available.length} of {AMENITY_CATALOG.length}
+                  </span>
                 </div>
-                <h2 className="text-xl font-bold uppercase tracking-wider text-emerald-50">Access Rules</h2>
-              </div>
-              <p className="text-white font-medium leading-relaxed text-lg">
-                {lounge.accessInstructions}
-              </p>
-              <div className="mt-8 pt-6 border-t border-emerald-400/40">
-                <p className="text-sm text-emerald-100 font-medium opacity-90 leading-snug">
-                  Please have your boarding pass, ID, and applicable membership credentials ready upon arrival.
+
+                <ul className="grid grid-cols-2 gap-x-6 gap-y-px overflow-hidden rounded-[14px] bg-surface p-1.5 ring-1 ring-hairline sm:grid-cols-3">
+                  {available.map(({ id, label }) => {
+                    const Icon = AMENITY_ICONS[id];
+                    return (
+                      <li key={id} className="flex items-center gap-2.5 px-3 py-2.5">
+                        <Icon
+                          size={17}
+                          strokeWidth={1.7}
+                          aria-hidden="true"
+                          className="shrink-0 text-accent"
+                        />
+                        <span className="text-[14px] text-ink">{label}</span>
+                      </li>
+                    );
+                  })}
+                </ul>
+
+                {unavailable.length > 0 && (
+                  <p className="mt-4 text-[13px] leading-relaxed text-ink-tertiary">
+                    <span className="text-ink-secondary">Not offered:</span>{" "}
+                    {unavailable.map((a) => a.label).join(", ")}.
+                  </p>
+                )}
+              </section>
+
+              {nearby.length > 0 && (
+                <section>
+                  <h2 className="text-title mb-5 text-[22px] text-ink">
+                    Also at {lounge.airportCode}
+                  </h2>
+                  <ul className="divide-y divide-hairline overflow-hidden rounded-[14px] bg-surface ring-1 ring-hairline">
+                    {nearby.map((other) => (
+                      <li key={other.id}>
+                        <Link
+                          href={`/lounge/${other.id}`}
+                          className="flex items-baseline justify-between gap-4 px-5 py-4 transition-colors hover:bg-surface-sunken"
+                        >
+                          <span className="text-[15px] font-medium text-ink">{other.name}</span>
+                          <span className="shrink-0 truncate text-[13px] text-ink-tertiary">
+                            {other.location}
+                          </span>
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
+                </section>
+              )}
+            </div>
+
+            <aside className="lg:sticky lg:top-20 lg:self-start">
+              <div className="rounded-[18px] bg-surface p-6 ring-1 ring-hairline">
+                <div className="mb-4 flex items-center gap-2">
+                  <ShieldCheck size={17} strokeWidth={1.8} className="text-accent" aria-hidden="true" />
+                  <h2 className="text-[15px] font-semibold text-ink">Access</h2>
+                </div>
+                <p className="text-[14px] leading-[1.6] text-ink-secondary">
+                  {lounge.accessInstructions}
+                </p>
+                <p className="mt-5 border-t border-hairline pt-4 text-[13px] leading-relaxed text-ink-tertiary">
+                  Have your boarding pass, ID, and membership credentials ready on arrival.
                 </p>
               </div>
-            </div>
-
-            <div className="bg-white rounded-3xl p-8 shadow-sm border border-gray-100">
-               <h3 className="text-lg font-bold text-gray-900 mb-4">Location & Wayfinding</h3>
-               <p className="text-gray-600 font-medium leading-snug">{lounge.location}</p>
-            </div>
+            </aside>
           </div>
         </div>
-      </div>
-    </div>
+      </main>
+    </>
   );
 }

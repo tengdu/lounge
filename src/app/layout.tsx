@@ -1,21 +1,19 @@
 import type { Metadata } from "next";
 import Script from "next/script";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Geist } from "next/font/google";
 import "./globals.css";
 
+// Geist_Mono was loaded but never applied to anything — dropping it removes
+// a font payload from every page.
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
+  display: "swap",
 });
 
 export const metadata: Metadata = {
-  title: "Lounge | Premium Airport Lounges",
-  description: "Unlock access to the world's most exclusive airport lounges. Relax, dine, and refresh before your next flight.",
+  title: "Lounge — Every airport lounge in the US",
+  description: "Find every airport lounge in the United States — locations, amenities, and access rules.",
   keywords: [
     "airport lounge",
     "premium travel",
@@ -35,8 +33,8 @@ export const metadata: Metadata = {
     telephone: false,
   },
   openGraph: {
-    title: "Lounge | Premium Airport Lounges",
-    description: "Unlock access to the world's most exclusive airport lounges. Relax, dine, and refresh before your next flight.",
+    title: "Lounge — Every airport lounge in the US",
+    description: "Find every airport lounge in the United States — locations, amenities, and access rules.",
     url: "https://lounge.com",
     siteName: "Lounge",
     locale: "en_US",
@@ -44,8 +42,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Lounge | Premium Airport Lounges",
-    description: "Unlock access to the world's most exclusive airport lounges. Relax, dine, and refresh before your next flight.",
+    title: "Lounge — Every airport lounge in the US",
+    description: "Find every airport lounge in the United States — locations, amenities, and access rules.",
   },
   robots: {
     index: true,
@@ -66,11 +64,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html
-      lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
-    >
-      <body className="min-h-full flex flex-col">
+    <html lang="en" className={`${geistSans.variable} h-full`}>
+      <body className="flex min-h-full flex-col">
         {children}
         <Script
           strategy="afterInteractive"

@@ -1,32 +1,74 @@
-import React from 'react';
-import LoungeCard from './LoungeCard';
-import { Plane } from 'lucide-react';
-import { Lounge } from '@/data/lounges';
+"use client";
+
+import { useEffect, useMemo, useRef, useState } from "react";
+import LoungeCard from "./LoungeCard";
+import { Lounge } from "@/data/lounges";
 
 interface LoungeListProps {
   lounges: Lounge[];
 }
 
+const PAGE_SIZE = 24;
+
 export default function LoungeList({ lounges }: LoungeListProps) {
+  const [visible, setVisible] = useState(PAGE_SIZE);
+  const [renderedFor, setRenderedFor] = useState(lounges);
+  const sentinelRef = useRef<HTMLDivElement | null>(null);
+
+  // A new result set is a new list — start from the top again. Adjusting
+  // during render (rather than in an effect) avoids painting the stale page
+  // count for a frame first.
+  if (renderedFor !== lounges) {
+    setRenderedFor(lounges);
+    setVisible(PAGE_SIZE);
+  }
+
+  const shown = useMemo(() => lounges.slice(0, visible), [lounges, visible]);
+  const hasMore = visible < lounges.length;
+
+  useEffect(() => {
+    if (!hasMore) return;
+    const node = sentinelRef.current;
+    if (!node) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0]?.isIntersecting) {
+          setVisible((n) => n + PAGE_SIZE);
+        }
+      },
+      // Start fetching the next page before the user reaches the bottom.
+      { rootMargin: "600px 0px" }
+    );
+
+    observer.observe(node);
+    return () => observer.disconnect();
+  }, [hasMore, shown.length]);
+
   if (lounges.length === 0) {
     return (
-      <div className="flex flex-col items-center justify-center py-20 px-4 text-center bg-white rounded-3xl border border-gray-100 shadow-sm animate-in fade-in duration-500">
-        <div className="bg-blue-50 text-blue-500 p-5 rounded-full mb-5">
-          <Plane size={36} className="rotate-45" />
-        </div>
-        <h3 className="text-2xl font-bold text-gray-900 mb-2">No lounges found</h3>
-        <p className="text-gray-500 max-w-md text-lg">
-          We couldn't find any lounges matching your search. Try adjusting your filters or search terms.
+      <div className="rounded-[18px] bg-surface px-6 py-24 text-center ring-1 ring-hairline">
+        <h3 className="text-title mb-2 text-[22px] text-ink">No lounges found</h3>
+        <p className="mx-auto max-w-sm text-[15px] leading-relaxed text-ink-secondary">
+          Try a different airport code, city, or lounge name.
         </p>
       </div>
     );
   }
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-      {lounges.map((lounge) => (
-        <LoungeCard key={lounge.id} lounge={lounge} />
-      ))}
-    </div>
+    <>
+      <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        {shown.map((lounge, i) => (
+          <LoungeCard key={lounge.id} lounge={lounge} eager={i < 3} />
+        ))}
+      </div>
+
+      {hasMore && (
+        <div ref={sentinelRef} className="flex justify-center py-12" aria-hidden="true">
+          <div className="h-1.5 w-1.5 animate-pulse rounded-full bg-ink-tertiary" />
+        </div>
+      )}
+    </>
   );
 }

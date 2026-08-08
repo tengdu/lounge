@@ -256,6 +256,155 @@ export const BRANDS = {
   },
 };
 
+// The amenity vocabulary, in the order it should be presented.
+// Grouped loosely: connectivity, food and drink, rest, work, extras.
+export const AMENITY_CATALOG = [
+  { id: 'wifi', label: 'Wi-Fi' },
+  { id: 'charging', label: 'Power at seats' },
+  { id: 'dining', label: 'Hot buffet' },
+  { id: 'alacarte', label: 'À la carte dining' },
+  { id: 'barista', label: 'Barista coffee' },
+  { id: 'bar', label: 'Full bar' },
+  { id: 'showers', label: 'Showers' },
+  { id: 'quiet', label: 'Quiet area' },
+  { id: 'naps', label: 'Rest suites' },
+  { id: 'workspace', label: 'Workspaces' },
+  { id: 'conference', label: 'Meeting rooms' },
+  { id: 'family', label: 'Family room' },
+  { id: 'terrace', label: 'Outdoor terrace' },
+  { id: 'runway', label: 'Runway views' },
+  { id: 'spa', label: 'Spa treatments' },
+  { id: 'fitness', label: 'Fitness area' },
+  { id: 'luggage', label: 'Luggage storage' },
+  { id: 'daypass', label: 'Day passes' },
+];
+
+// What each brand actually offers, keyed by brand.
+//
+// This used to be inferred by string-matching the description on the detail
+// page, which greyed out Wi-Fi on two-thirds of lounges simply because the
+// blurb did not happen to use the word. Amenities are data, not prose.
+//
+// Order does not matter here — the generator sorts each list into
+// AMENITY_CATALOG order so presentation stays consistent.
+export const BRAND_AMENITIES = {
+  'delta-sky-club': ['wifi', 'charging', 'dining', 'barista', 'bar', 'quiet', 'workspace', 'runway'],
+  'delta-one': [
+    'wifi', 'charging', 'dining', 'alacarte', 'barista', 'bar', 'showers',
+    'quiet', 'naps', 'workspace', 'runway', 'spa',
+  ],
+  'united-club': [
+    'wifi', 'charging', 'dining', 'barista', 'bar', 'quiet', 'workspace',
+    'conference', 'family', 'runway', 'daypass',
+  ],
+  'united-club-fly': ['wifi', 'charging', 'dining', 'barista'],
+  'united-polaris': [
+    'wifi', 'charging', 'dining', 'alacarte', 'barista', 'bar', 'showers',
+    'quiet', 'naps', 'workspace', 'runway',
+  ],
+  admirals: [
+    'wifi', 'charging', 'dining', 'barista', 'bar', 'quiet', 'workspace',
+    'conference', 'family', 'daypass',
+  ],
+  provisions: ['wifi', 'charging', 'dining', 'barista', 'daypass'],
+  flagship: [
+    'wifi', 'charging', 'dining', 'alacarte', 'barista', 'bar', 'showers',
+    'quiet', 'workspace', 'runway',
+  ],
+  alaska: ['wifi', 'charging', 'dining', 'barista', 'bar', 'quiet', 'workspace', 'runway', 'daypass'],
+  centurion: [
+    'wifi', 'charging', 'dining', 'alacarte', 'barista', 'bar', 'quiet',
+    'workspace', 'family', 'runway', 'daypass',
+  ],
+  'capital-one-lounge': [
+    'wifi', 'charging', 'dining', 'alacarte', 'barista', 'bar', 'showers',
+    'quiet', 'naps', 'workspace', 'family', 'fitness', 'daypass',
+  ],
+  'capital-one-landing': [
+    'wifi', 'charging', 'dining', 'alacarte', 'bar', 'quiet', 'workspace', 'daypass',
+  ],
+  'chase-sapphire': [
+    'wifi', 'charging', 'dining', 'alacarte', 'barista', 'bar', 'showers',
+    'quiet', 'workspace', 'spa', 'daypass',
+  ],
+  'chase-sapphire-terrace': [
+    'wifi', 'charging', 'dining', 'barista', 'bar', 'quiet', 'workspace', 'terrace', 'daypass',
+  ],
+  escape: ['wifi', 'charging', 'dining', 'bar', 'quiet', 'workspace', 'runway', 'daypass'],
+  'the-club': ['wifi', 'charging', 'dining', 'bar', 'quiet', 'workspace', 'daypass'],
+  'plaza-premium': [
+    'wifi', 'charging', 'dining', 'bar', 'showers', 'quiet', 'naps',
+    'workspace', 'luggage', 'daypass',
+  ],
+  'plaza-premium-first': [
+    'wifi', 'charging', 'dining', 'alacarte', 'bar', 'showers', 'quiet',
+    'naps', 'workspace', 'luggage', 'daypass',
+  ],
+  uso: ['wifi', 'charging', 'dining', 'quiet', 'naps', 'family', 'workspace'],
+  military: ['wifi', 'charging', 'dining', 'quiet', 'family'],
+  'foreign-business': [
+    'wifi', 'charging', 'dining', 'barista', 'bar', 'showers', 'quiet',
+    'workspace', 'conference', 'runway',
+  ],
+  'foreign-first': [
+    'wifi', 'charging', 'dining', 'alacarte', 'barista', 'bar', 'showers',
+    'quiet', 'naps', 'workspace', 'spa', 'runway',
+  ],
+  alliance: [
+    'wifi', 'charging', 'dining', 'alacarte', 'bar', 'showers', 'quiet',
+    'workspace', 'terrace', 'runway',
+  ],
+  independent: ['wifi', 'charging', 'dining', 'bar', 'quiet', 'workspace', 'daypass'],
+  jetblue: ['wifi', 'charging', 'dining', 'alacarte', 'bar', 'quiet', 'workspace', 'runway'],
+  hawaiian: ['wifi', 'charging', 'dining', 'bar', 'quiet', 'workspace', 'runway'],
+};
+
+// Real, freely-licensed photographs of specific lounges, keyed by lounge id.
+// Anything not listed here falls back to brand-consistent generic art.
+//
+// Every entry must be a free license (CC BY / CC BY-SA / public domain) with
+// attribution recorded in CREDITS.md — this site is published publicly, so
+// airline and card-issuer press photos are not usable here.
+// Source files live in assets/lounges/real/.
+export const LOUNGE_PHOTOS = {
+  'sea-alaska-lounge-north-satellite-mezzanine-above-gates-n13-to-n18':
+    'sea-alaska-lounge-north-satellite',
+  'sea-delta-sky-club-concourse-a-near-gate-a1': 'sea-delta-sky-club-a',
+  'sea-delta-sky-club-concourse-a-near-gate-a11': 'sea-delta-sky-club-b',
+};
+
+// Generic art assigned per brand, so every Alaska Lounge looks like an Alaska
+// Lounge instead of drawing a random image per location. Not a real photo of
+// the specific room — just consistent and plausible.
+export const BRAND_IMAGES = {
+  'delta-sky-club': 'lounge_modern',
+  'delta-one': 'lounge_firstclass',
+  'united-club': 'lounge_premium',
+  'united-club-fly': 'lounge_express',
+  'united-polaris': 'lounge_firstclass',
+  admirals: 'lounge_classic',
+  provisions: 'lounge_express',
+  flagship: 'lounge_premium',
+  alaska: 'lounge_view',
+  centurion: 'lounge_cozy',
+  'capital-one-lounge': 'lounge_minimalist',
+  'capital-one-landing': 'lounge_minimalist',
+  'chase-sapphire': 'lounge_terrace',
+  'chase-sapphire-terrace': 'lounge_terrace',
+  escape: 'lounge_bright',
+  'the-club': 'lounge_midwest',
+  'plaza-premium': 'lounge_zen',
+  'plaza-premium-first': 'lounge_vintage',
+  uso: 'lounge_family',
+  military: 'lounge_family',
+  'foreign-business': 'lounge_tropical',
+  'foreign-first': 'lounge_vintage',
+  alliance: 'lounge_zen',
+  independent: 'lounge_midwest',
+  jetblue: 'lounge_bright',
+  hawaiian: 'lounge_tropical',
+};
+
 // [airportCode, lounge name, location, brand, note?]
 export const LOUNGES = [
   // ---------- ANC ----------
