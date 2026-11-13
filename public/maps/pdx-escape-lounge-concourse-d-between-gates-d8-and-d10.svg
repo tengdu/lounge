@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 192" role="img" aria-label="Floor plan showing Escape Lounge and nearby gates">
+<rect width="100%" height="100%" fill="#f7f7f9"/>
+<g>
+<polygon points="277.5,40.8 283.5,50.0 281.6,35.8" fill="#ffffff" stroke="#e2e2e7" stroke-width="0.7"/>
+<polygon points="264.5,58.0 283.5,50.0 293.5,34.1" fill="#ffffff" stroke="#e2e2e7" stroke-width="0.7"/>
+<polygon points="289.7,79.1 301.5,65.0" fill="#ffffff" stroke="#e2e2e7" stroke-width="0.7"/>
+<polygon points="322.4,58.3 310.4,72.5" fill="#ffffff" stroke="#e2e2e7" stroke-width="0.7"/>
+<polygon points="355.4,134.9 367.5,120.3 380.2,106.7" fill="#ffffff" stroke="#e2e2e7" stroke-width="0.7"/>
+<polygon points="377.6,153.5 389.6,138.8 408.7,130.8" fill="#ffffff" stroke="#e2e2e7" stroke-width="0.7"/>
+<polygon points="457.5,171.9 445.9,185.9 431.2,198.7" fill="#ffffff" stroke="#e2e2e7" stroke-width="0.7"/>
+<polygon points="123.0,223.2 110.5,237.3" fill="#ffffff" stroke="#e2e2e7" stroke-width="0.7"/>
+<polygon points="335.0,71.8 330.8,77.0" fill="#ffffff" stroke="#e2e2e7" stroke-width="0.7"/>
+<polygon points="332.4,69.7 335.0,71.8" fill="#ffffff" stroke="#e2e2e7" stroke-width="0.7"/>
+<polygon points="328.2,74.8 330.8,77.0" fill="#ffffff" stroke="#e2e2e7" stroke-width="0.7"/>
+<polygon points="322.0,82.2 328.2,74.8 332.4,69.7" fill="#ffffff" stroke="#e2e2e7" stroke-width="0.7"/>
+<polygon points="278.7,63.7 281.6,60.1" fill="#ffffff" stroke="#e2e2e7" stroke-width="0.7"/>
+<polygon points="278.9,57.8 281.6,60.1" fill="#ffffff" stroke="#e2e2e7" stroke-width="0.7"/>
+<polygon points="275.9,61.3 278.7,63.7" fill="#ffffff" stroke="#e2e2e7" stroke-width="0.7"/>
+<polygon points="284.9,51.1 278.9,57.8 275.9,61.3" fill="#ffffff" stroke="#e2e2e7" stroke-width="0.7"/>
+<polygon points="469.1,205.3 474.5,209.7 495.5,226.1 479.3,244.3" fill="#ffffff" stroke="#e2e2e7" stroke-width="0.7"/>
+<polygon points="479.3,244.3 460.5,227.5 452.7,236.9 399.3,301.1 330.5,384.8 327.3,388.7 320.5,397.8 336.7,410.1" fill="#ffffff" stroke="#e2e2e7" stroke-width="0.7"/>
+<polygon points="312.2,407.1 304.0,400.5 298.0,395.6 276.6,377.5 272.2,373.9 251.5,356.4 228.8,337.1 197.8,311.0 172.1,289.4 158.8,278.1 134.0,257.2 125.5,249.9 110.5,237.3 96.5,225.5 68.5,201.9 55.6,190.9 41.0,178.7 28.7,168.3" fill="#ffffff" stroke="#e2e2e7" stroke-width="0.7"/>
+</g>
+<polygon points="306.0,88.0 334.0,88.0 334.0,104.0 306.0,104.0" fill="#0071e3" fill-opacity="0.9" stroke="#0071e3" stroke-width="2" stroke-linejoin="round"/>
+<g><rect x="310.3" y="51.8" width="24.2" height="13" rx="6.5" fill="#ffffff" stroke="#c7c7cf" stroke-width="0.8"/><text x="322.4" y="61.7" font-family="system-ui,-apple-system,sans-serif" font-size="8" font-weight="600" text-anchor="middle" fill="#3a3a3e">D11</text></g>
+<g><rect x="346.0" y="128.4" width="18.8" height="13" rx="6.5" fill="#ffffff" stroke="#c7c7cf" stroke-width="0.8"/><text x="355.4" y="138.3" font-family="system-ui,-apple-system,sans-serif" font-size="8" font-weight="600" text-anchor="middle" fill="#3a3a3e">D8</text></g>
+<g><rect x="370.8" y="100.2" width="18.8" height="13" rx="6.5" fill="#ffffff" stroke="#c7c7cf" stroke-width="0.8"/><text x="380.2" y="110.1" font-family="system-ui,-apple-system,sans-serif" font-size="8" font-weight="600" text-anchor="middle" fill="#3a3a3e">D9</text></g>
+<g><rect x="252.4" y="51.5" width="24.2" height="13" rx="6.5" fill="#ffffff" stroke="#c7c7cf" stroke-width="0.8"/><text x="264.5" y="61.4" font-family="system-ui,-apple-system,sans-serif" font-size="8" font-weight="600" text-anchor="middle" fill="#3a3a3e">D12</text></g>
+<g><rect x="281.4" y="27.6" width="24.2" height="13" rx="6.5" fill="#ffffff" stroke="#c7c7cf" stroke-width="0.8"/><text x="293.5" y="37.5" font-family="system-ui,-apple-system,sans-serif" font-size="8" font-weight="600" text-anchor="middle" fill="#3a3a3e">D13</text></g>
+<g><rect x="368.2" y="147.0" width="18.8" height="13" rx="6.5" fill="#ffffff" stroke="#c7c7cf" stroke-width="0.8"/><text x="377.6" y="156.9" font-family="system-ui,-apple-system,sans-serif" font-size="8" font-weight="600" text-anchor="middle" fill="#3a3a3e">D6</text></g>
+<g><rect x="399.3" y="124.3" width="18.8" height="13" rx="6.5" fill="#ffffff" stroke="#c7c7cf" stroke-width="0.8"/><text x="408.7" y="134.2" font-family="system-ui,-apple-system,sans-serif" font-size="8" font-weight="600" text-anchor="middle" fill="#3a3a3e">D7</text></g>
+<g><rect x="421.8" y="192.2" width="18.8" height="13" rx="6.5" fill="#ffffff" stroke="#c7c7cf" stroke-width="0.8"/><text x="431.2" y="202.1" font-family="system-ui,-apple-system,sans-serif" font-size="8" font-weight="600" text-anchor="middle" fill="#3a3a3e">D4</text></g>
+<g><rect x="448.1" y="165.4" width="18.8" height="13" rx="6.5" fill="#ffffff" stroke="#c7c7cf" stroke-width="0.8"/><text x="457.5" y="175.3" font-family="system-ui,-apple-system,sans-serif" font-size="8" font-weight="600" text-anchor="middle" fill="#3a3a3e">D5</text></g>
+<g><rect x="110.9" y="216.7" width="24.2" height="13" rx="6.5" fill="#ffffff" stroke="#c7c7cf" stroke-width="0.8"/><text x="123.0" y="226.6" font-family="system-ui,-apple-system,sans-serif" font-size="8" font-weight="600" text-anchor="middle" fill="#3a3a3e">C16</text></g>
+<text x="320.0" y="80.0" font-family="system-ui,-apple-system,sans-serif" font-size="11" font-weight="700" text-anchor="middle" fill="#0071e3" paint-order="stroke" stroke="#f7f7f9" stroke-width="3.5">Escape Lounge</text>
+<g opacity="0.75"><line x1="12" y1="180.0" x2="62.0" y2="180.0" stroke="#86868b" stroke-width="1.4"/><text x="12" y="176.0" font-family="system-ui,-apple-system,sans-serif" font-size="7.5" fill="#86868b">50 m</text></g>
+</svg>

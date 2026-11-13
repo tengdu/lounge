@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 192" role="img" aria-label="Floor plan showing Delta Sky Club and nearby gates">
+<rect width="100%" height="100%" fill="#f7f7f9"/>
+<g>
+<polygon points="355.0,50.1 313.8,103.1 295.4,88.9 273.9,116.6 287.2,127.0 294.6,117.5 324.8,140.9 380.2,69.7 355.0,50.1" fill="#ffffff" stroke="#e2e2e7" stroke-width="0.7"/>
+<polygon points="363.4,261.7 374.2,269.8 383.1,258.2 424.8,203.9 458.5,159.5 470.3,143.9 459.5,135.7" fill="#ffffff" stroke="#e2e2e7" stroke-width="0.7"/>
+<polygon points="451.7,223.4 424.8,203.9 387.2,176.4" fill="#ffffff" stroke="#e2e2e7" stroke-width="0.7"/>
+<polygon points="436.4,243.6 451.7,223.4" fill="#ffffff" stroke="#e2e2e7" stroke-width="0.7"/>
+<polygon points="451.7,223.4 463.9,207.3" fill="#ffffff" stroke="#e2e2e7" stroke-width="0.7"/>
+<polygon points="458.5,159.5 483.5,178.1 482.9,183.2" fill="#ffffff" stroke="#e2e2e7" stroke-width="0.7"/>
+<polygon points="366.4,246.3 382.0,225.9 377.3,222.2 385.4,211.5 287.5,138.6 284.0,136.1 278.5,143.3 199.1,247.8 193.5,255.3" fill="#ffffff" stroke="#e2e2e7" stroke-width="0.7"/>
+<polygon points="282.0,145.9 287.5,138.6" fill="#ffffff" stroke="#e2e2e7" stroke-width="0.7"/>
+</g>
+<polygon points="355.0,50.1 313.8,103.1 295.4,88.9 273.9,116.6 287.2,127.0 294.6,117.5 324.8,140.9 380.2,69.7 355.0,50.1" fill="#0071e3" fill-opacity="0.9" stroke="#0071e3" stroke-width="2" stroke-linejoin="round"/>
+<g><rect x="341.8" y="39.6" width="24.2" height="13" rx="6.5" fill="#ffffff" stroke="#c7c7cf" stroke-width="0.8"/><text x="353.9" y="49.5" font-family="system-ui,-apple-system,sans-serif" font-size="8" font-weight="600" text-anchor="middle" fill="#3a3a3e">A27</text></g>
+<g><rect x="246.2" y="158.7" width="24.2" height="13" rx="6.5" fill="#ffffff" stroke="#c7c7cf" stroke-width="0.8"/><text x="258.3" y="168.6" font-family="system-ui,-apple-system,sans-serif" font-size="8" font-weight="600" text-anchor="middle" fill="#3a3a3e">A25</text></g>
+<g><rect x="395.8" y="30.6" width="24.2" height="13" rx="6.5" fill="#ffffff" stroke="#c7c7cf" stroke-width="0.8"/><text x="407.9" y="40.5" font-family="system-ui,-apple-system,sans-serif" font-size="8" font-weight="600" text-anchor="middle" fill="#3a3a3e">A26</text></g>
+<g><rect x="372.2" y="-0.4" width="24.2" height="13" rx="6.5" fill="#ffffff" stroke="#c7c7cf" stroke-width="0.8"/><text x="384.3" y="9.5" font-family="system-ui,-apple-system,sans-serif" font-size="8" font-weight="600" text-anchor="middle" fill="#3a3a3e">A29</text></g>
+<g><rect x="223.7" y="188.3" width="24.2" height="13" rx="6.5" fill="#ffffff" stroke="#c7c7cf" stroke-width="0.8"/><text x="235.8" y="198.2" font-family="system-ui,-apple-system,sans-serif" font-size="8" font-weight="600" text-anchor="middle" fill="#3a3a3e">A23</text></g>
+<g><rect x="420.2" y="-1.5" width="24.2" height="13" rx="6.5" fill="#ffffff" stroke="#c7c7cf" stroke-width="0.8"/><text x="432.3" y="8.4" font-family="system-ui,-apple-system,sans-serif" font-size="8" font-weight="600" text-anchor="middle" fill="#3a3a3e">A28</text></g>
+<g><rect x="397.7" y="-34.1" width="24.2" height="13" rx="6.5" fill="#ffffff" stroke="#c7c7cf" stroke-width="0.8"/><text x="409.8" y="-24.2" font-family="system-ui,-apple-system,sans-serif" font-size="8" font-weight="600" text-anchor="middle" fill="#3a3a3e">A31</text></g>
+<g><rect x="206.2" y="211.5" width="24.2" height="13" rx="6.5" fill="#ffffff" stroke="#c7c7cf" stroke-width="0.8"/><text x="218.3" y="221.4" font-family="system-ui,-apple-system,sans-serif" font-size="8" font-weight="600" text-anchor="middle" fill="#3a3a3e">A21</text></g>
+<g><rect x="451.7" y="-43.2" width="24.2" height="13" rx="6.5" fill="#ffffff" stroke="#c7c7cf" stroke-width="0.8"/><text x="463.8" y="-33.3" font-family="system-ui,-apple-system,sans-serif" font-size="8" font-weight="600" text-anchor="middle" fill="#3a3a3e">A30</text></g>
+<text x="320.0" y="80.0" font-family="system-ui,-apple-system,sans-serif" font-size="11" font-weight="700" text-anchor="middle" fill="#0071e3" paint-order="stroke" stroke="#f7f7f9" stroke-width="3.5">Delta Sky Club</text>
+<g opacity="0.75"><line x1="12" y1="180.0" x2="62.0" y2="180.0" stroke="#86868b" stroke-width="1.4"/><text x="12" y="176.0" font-family="system-ui,-apple-system,sans-serif" font-size="7.5" fill="#86868b">50 m</text></g>
+</svg>

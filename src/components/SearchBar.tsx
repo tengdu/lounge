@@ -1,6 +1,7 @@
 "use client";
 
 import { Search, X } from "lucide-react";
+import { MAX_QUERY_LENGTH } from "@/lib/list-state";
 
 interface SearchBarProps {
   searchTerm: string;
@@ -18,6 +19,7 @@ export default function SearchBar({ searchTerm, onSearchChange }: SearchBarProps
       <input
         type="search"
         value={searchTerm}
+        maxLength={MAX_QUERY_LENGTH}
         onChange={(e) => onSearchChange(e.target.value)}
         aria-label="Search lounges by airport, city, or name"
         placeholder="Search airport, city, or lounge"

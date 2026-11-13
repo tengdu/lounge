@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 192" role="img" aria-label="Floor plan showing The Club CLT and nearby gates">
+<rect width="100%" height="100%" fill="#f7f7f9"/>
+<g>
+<polygon points="585.2,153.8 585.8,148.7 513.1,140.0 512.5,145.4" fill="#ffffff" stroke="#e2e2e7" stroke-width="0.7"/>
+<polygon points="463.0,206.8 461.6,218.8 459.1,240.7 487.6,244.0 588.4,255.6 615.0,258.7 617.3,237.3 618.6,225.0" fill="#ffffff" stroke="#e2e2e7" stroke-width="0.7"/>
+<polygon points="461.6,218.8 510.4,224.6 568.7,231.5 617.3,237.3" fill="#ffffff" stroke="#e2e2e7" stroke-width="0.7"/>
+<polygon points="510.4,224.6 510.8,221.2" fill="#ffffff" stroke="#e2e2e7" stroke-width="0.7"/>
+<polygon points="502.1,220.3 510.8,221.2" fill="#ffffff" stroke="#e2e2e7" stroke-width="0.7"/>
+</g>
+<polygon points="306.0,88.0 334.0,88.0 334.0,104.0 306.0,104.0" fill="#0071e3" fill-opacity="0.9" stroke="#0071e3" stroke-width="2" stroke-linejoin="round"/>
+<g><rect x="301.4" y="-9.3" width="24.2" height="13" rx="6.5" fill="#ffffff" stroke="#c7c7cf" stroke-width="0.8"/><text x="313.5" y="0.6" font-family="system-ui,-apple-system,sans-serif" font-size="8" font-weight="600" text-anchor="middle" fill="#3a3a3e">A22</text></g>
+<g><rect x="286.5" y="212.0" width="18.8" height="13" rx="6.5" fill="#ffffff" stroke="#c7c7cf" stroke-width="0.8"/><text x="295.9" y="221.9" font-family="system-ui,-apple-system,sans-serif" font-size="8" font-weight="600" text-anchor="middle" fill="#3a3a3e">A1</text></g>
+<g><rect x="238.5" y="-17.0" width="24.2" height="13" rx="6.5" fill="#ffffff" stroke="#c7c7cf" stroke-width="0.8"/><text x="250.6" y="-7.1" font-family="system-ui,-apple-system,sans-serif" font-size="8" font-weight="600" text-anchor="middle" fill="#3a3a3e">A24</text></g>
+<g><rect x="252.7" y="211.3" width="18.8" height="13" rx="6.5" fill="#ffffff" stroke="#c7c7cf" stroke-width="0.8"/><text x="262.1" y="221.2" font-family="system-ui,-apple-system,sans-serif" font-size="8" font-weight="600" text-anchor="middle" fill="#3a3a3e">A3</text></g>
+<g><rect x="219.4" y="202.1" width="18.8" height="13" rx="6.5" fill="#ffffff" stroke="#c7c7cf" stroke-width="0.8"/><text x="228.8" y="212.0" font-family="system-ui,-apple-system,sans-serif" font-size="8" font-weight="600" text-anchor="middle" fill="#3a3a3e">A5</text></g>
+<g><rect x="207.3" y="-21.1" width="24.2" height="13" rx="6.5" fill="#ffffff" stroke="#c7c7cf" stroke-width="0.8"/><text x="219.4" y="-11.2" font-family="system-ui,-apple-system,sans-serif" font-size="8" font-weight="600" text-anchor="middle" fill="#3a3a3e">A26</text></g>
+<g><rect x="162.2" y="197.2" width="18.8" height="13" rx="6.5" fill="#ffffff" stroke="#c7c7cf" stroke-width="0.8"/><text x="171.6" y="207.1" font-family="system-ui,-apple-system,sans-serif" font-size="8" font-weight="600" text-anchor="middle" fill="#3a3a3e">A7</text></g>
+<g><rect x="130.9" y="193.4" width="18.8" height="13" rx="6.5" fill="#ffffff" stroke="#c7c7cf" stroke-width="0.8"/><text x="140.3" y="203.3" font-family="system-ui,-apple-system,sans-serif" font-size="8" font-weight="600" text-anchor="middle" fill="#3a3a3e">A9</text></g>
+<g><rect x="114.8" y="217.0" width="24.2" height="13" rx="6.5" fill="#ffffff" stroke="#c7c7cf" stroke-width="0.8"/><text x="126.9" y="226.9" font-family="system-ui,-apple-system,sans-serif" font-size="8" font-weight="600" text-anchor="middle" fill="#3a3a3e">A12</text></g>
+<text x="320.0" y="80.0" font-family="system-ui,-apple-system,sans-serif" font-size="11" font-weight="700" text-anchor="middle" fill="#0071e3" paint-order="stroke" stroke="#f7f7f9" stroke-width="3.5">The Club CLT</text>
+<g opacity="0.75"><line x1="12" y1="180.0" x2="62.0" y2="180.0" stroke="#86868b" stroke-width="1.4"/><text x="12" y="176.0" font-family="system-ui,-apple-system,sans-serif" font-size="7.5" fill="#86868b">50 m</text></g>
+</svg>

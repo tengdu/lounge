@@ -3,7 +3,6 @@ import { notFound } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
 import {
-  ArrowLeft,
   Baby,
   BedDouble,
   ChefHat,
@@ -15,7 +14,6 @@ import {
   Plane,
   Plug,
   Presentation,
-  ShieldCheck,
   ShowerHead,
   Sparkles,
   Sun,
@@ -26,7 +24,12 @@ import {
   type LucideIcon,
 } from "lucide-react";
 import { AMENITY_CATALOG, lounges, type Amenity } from "@/data/lounges";
+import { positionFor } from "@/lib/positions";
 import { blurFor, heroSrc, withBasePath } from "@/lib/images";
+import AccessPanel from "@/components/AccessPanel";
+import BackToList from "@/components/BackToList";
+import GettingThere from "@/components/GettingThere";
+import PhotoNotice from "@/components/PhotoNotice";
 
 export async function generateStaticParams() {
   return lounges.map((lounge) => ({ id: lounge.id }));
@@ -91,20 +94,19 @@ export default async function LoungeDetailPage({
     .filter((l) => l.airportCode === lounge.airportCode && l.id !== lounge.id)
     .slice(0, 4);
 
+  // Alt text describes a photograph; generic brand art is decorative and gets
+  // an empty alt so screen readers skip it rather than announcing a fiction.
+  const heroAlt = lounge.photo
+    ? lounge.photo.kind === "entrance"
+      ? `The entrance to the ${lounge.name} at ${lounge.airportCode}`
+      : `Inside the ${lounge.name} at ${lounge.airportCode}`
+    : "";
+
   return (
     <>
       <header className="sticky top-0 z-50 border-b border-hairline bg-canvas/72 backdrop-blur-xl backdrop-saturate-150">
         <div className="mx-auto flex h-12 max-w-5xl items-center px-5">
-          <Link
-            href="/"
-            className="group inline-flex items-center gap-1.5 text-[14px] font-medium text-ink-secondary transition-colors hover:text-ink"
-          >
-            <ArrowLeft
-              size={15}
-              className="transition-transform duration-300 group-hover:-translate-x-0.5"
-            />
-            All lounges
-          </Link>
+          <BackToList />
         </div>
       </header>
 
@@ -112,7 +114,7 @@ export default async function LoungeDetailPage({
         <div className="relative h-[42vh] min-h-[280px] w-full overflow-hidden bg-surface-sunken md:h-[54vh]">
           <Image
             src={withBasePath(heroSrc(lounge.imageUrl))}
-            alt={lounge.hasRealPhoto ? `Inside the ${lounge.name} at ${lounge.airportCode}` : ""}
+            alt={heroAlt}
             fill
             preload
             sizes="100vw"
@@ -124,7 +126,7 @@ export default async function LoungeDetailPage({
             aria-hidden="true"
             className="absolute inset-0 bg-gradient-to-t from-canvas via-canvas/10 to-transparent"
           />
-          {!lounge.hasRealPhoto && (
+          {!lounge.photo && (
             <span className="absolute top-3 right-4 rounded-full bg-black/45 px-2.5 py-1 text-[11px] font-medium text-white/90 backdrop-blur-sm">
               Illustrative photo
             </span>
@@ -148,9 +150,19 @@ export default async function LoungeDetailPage({
             <p className="mt-5 max-w-2xl text-[19px] leading-[1.5] text-ink-secondary">
               {lounge.location}
             </p>
+
+            {lounge.closed && (
+              <p className="mt-5 inline-block rounded-[10px] bg-amber-50 px-3 py-2 text-[13px] font-medium text-amber-900 ring-1 ring-amber-600/20">
+                Closed for renovation — check before you travel.
+              </p>
+            )}
           </div>
 
-          <div className="mt-14 grid grid-cols-1 gap-x-12 gap-y-12 pb-24 lg:grid-cols-[1fr_320px]">
+          <div className="mt-8">
+            <PhotoNotice lounge={lounge} />
+          </div>
+
+          <div className="mt-12 grid grid-cols-1 gap-x-12 gap-y-12 pb-24 lg:grid-cols-[1fr_340px]">
             <div className="space-y-12">
               <section>
                 <h2 className="text-title mb-4 text-[22px] text-ink">Overview</h2>
@@ -158,6 +170,16 @@ export default async function LoungeDetailPage({
                   {lounge.description}
                 </p>
               </section>
+
+              <GettingThere
+                wayfinding={lounge.wayfinding}
+                airportName={lounge.airportName}
+                airportCode={lounge.airportCode}
+                location={lounge.location}
+                position={positionFor(lounge.id)}
+                loungeId={lounge.id}
+                loungeName={lounge.name}
+              />
 
               <section>
                 <div className="mb-5 flex items-baseline justify-between">
@@ -204,8 +226,13 @@ export default async function LoungeDetailPage({
                           href={`/lounge/${other.id}`}
                           className="flex items-baseline justify-between gap-4 px-5 py-4 transition-colors hover:bg-surface-sunken"
                         >
-                          <span className="text-[15px] font-medium text-ink">{other.name}</span>
-                          <span className="shrink-0 truncate text-[13px] text-ink-tertiary">
+                          {/* Both truncate: a long location used to be
+                              unshrinkable and forced the name to wrap one
+                              letter per line. */}
+                          <span className="min-w-0 truncate text-[15px] font-medium text-ink">
+                            {other.name}
+                          </span>
+                          <span className="min-w-0 max-w-[60%] truncate text-right text-[13px] text-ink-tertiary">
                             {other.location}
                           </span>
                         </Link>
@@ -217,18 +244,7 @@ export default async function LoungeDetailPage({
             </div>
 
             <aside className="lg:sticky lg:top-20 lg:self-start">
-              <div className="rounded-[18px] bg-surface p-6 ring-1 ring-hairline">
-                <div className="mb-4 flex items-center gap-2">
-                  <ShieldCheck size={17} strokeWidth={1.8} className="text-accent" aria-hidden="true" />
-                  <h2 className="text-[15px] font-semibold text-ink">Access</h2>
-                </div>
-                <p className="text-[14px] leading-[1.6] text-ink-secondary">
-                  {lounge.accessInstructions}
-                </p>
-                <p className="mt-5 border-t border-hairline pt-4 text-[13px] leading-relaxed text-ink-tertiary">
-                  Have your boarding pass, ID, and membership credentials ready on arrival.
-                </p>
-              </div>
+              <AccessPanel access={lounge.access} />
             </aside>
           </div>
         </div>

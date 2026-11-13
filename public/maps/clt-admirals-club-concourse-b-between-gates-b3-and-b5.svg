@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 192" role="img" aria-label="Floor plan showing Admirals Club and nearby gates">
+<rect width="100%" height="100%" fill="#f7f7f9"/>
+<g>
+<polygon points="474.1,-69.4 475.5,-44.2 481.1,-5.7 481.1,10.5 481.4,14.4 482.2,17.4 483.8,19.9 486.5,22.6 531.6,57.1 533.0,63.4 534.5,70.3 539.4,92.6 543.2,110.2 543.6,112.2 554.0,159.0 558.0,178.0 563.0,201.2 567.8,223.0 569.9,233.1 574.7,256.1 579.8,279.7" fill="#ffffff" stroke="#e2e2e7" stroke-width="0.7"/>
+<polygon points="391.9,-7.7 391.6,7.8 391.1,12.7 390.0,16.6 387.5,19.4 384.2,21.5 344.8,37.3 342.6,45.2 341.3,49.9 334.5,73.7 319.4,127.0 311.3,155.7 309.4,162.6 300.3,194.7 292.2,223.2 285.0,249.1 283.2,255.9 279.8,268.3" fill="#ffffff" stroke="#e2e2e7" stroke-width="0.7"/>
+<polygon points="37.3,-15.1 45.5,-15.0 69.1,-14.6 103.1,-13.9 126.0,-13.4 157.1,-12.8 193.6,-12.0 263.5,-10.5 326.0,-9.2 386.3,-7.8 391.9,-7.7 481.1,-5.7 488.2,-5.6 648.0,-2.1 660.9,-1.8 677.8,-1.5" fill="#ffffff" stroke="#e2e2e7" stroke-width="0.7"/>
+<polygon points="344.8,37.3 336.8,32.2 326.3,5.5 326.0,-9.2" fill="#ffffff" stroke="#e2e2e7" stroke-width="0.7"/>
+<polygon points="400.6,-70.5 398.9,-46.2 391.9,-7.7" fill="#ffffff" stroke="#e2e2e7" stroke-width="0.7"/>
+<polygon points="193.5,-27.5 193.6,-12.0 193.2,3.9" fill="#ffffff" stroke="#e2e2e7" stroke-width="0.7"/>
+<polygon points="157.6,5.0 157.1,-12.8 159.8,-24.9" fill="#ffffff" stroke="#e2e2e7" stroke-width="0.7"/>
+<polygon points="125.7,-30.7 126.0,-13.4" fill="#ffffff" stroke="#e2e2e7" stroke-width="0.7"/>
+<polygon points="103.2,-0.9 103.1,-13.9" fill="#ffffff" stroke="#e2e2e7" stroke-width="0.7"/>
+<polygon points="521.4,66.1 533.0,63.4" fill="#ffffff" stroke="#e2e2e7" stroke-width="0.7"/>
+<polygon points="534.5,70.3 550.9,65.7" fill="#ffffff" stroke="#e2e2e7" stroke-width="0.7"/>
+<polygon points="528.1,95.4 539.4,92.6" fill="#ffffff" stroke="#e2e2e7" stroke-width="0.7"/>
+<polygon points="543.2,110.2 556.6,106.9" fill="#ffffff" stroke="#e2e2e7" stroke-width="0.7"/>
+<polygon points="532.5,114.9 543.6,112.2" fill="#ffffff" stroke="#e2e2e7" stroke-width="0.7"/>
+<polygon points="543.0,161.3 554.0,159.0" fill="#ffffff" stroke="#e2e2e7" stroke-width="0.7"/>
+<polygon points="554.0,159.0 567.6,156.3" fill="#ffffff" stroke="#e2e2e7" stroke-width="0.7"/>
+<polygon points="547.2,180.4 558.0,178.0" fill="#ffffff" stroke="#e2e2e7" stroke-width="0.7"/>
+<polygon points="391.1,12.7 481.4,14.4" fill="#ffffff" stroke="#e2e2e7" stroke-width="0.7"/>
+<polygon points="358.6,-55.7 358.4,-43.7 358.1,-21.6 386.7,-21.2 488.3,-19.6 515.0,-19.2 515.2,-40.7 515.2,-53.1" fill="#ffffff" stroke="#e2e2e7" stroke-width="0.7"/>
+<polygon points="386.7,-21.2 386.3,-7.8" fill="#ffffff" stroke="#e2e2e7" stroke-width="0.7"/>
+<polygon points="488.3,-19.6 488.2,-5.6" fill="#ffffff" stroke="#e2e2e7" stroke-width="0.7"/>
+<polygon points="328.3,41.0 342.6,45.2" fill="#ffffff" stroke="#e2e2e7" stroke-width="0.7"/>
+<polygon points="354.3,53.5 341.3,49.9" fill="#ffffff" stroke="#e2e2e7" stroke-width="0.7"/>
+<polygon points="320.4,69.5 334.5,73.7 344.2,77.6" fill="#ffffff" stroke="#e2e2e7" stroke-width="0.7"/>
+<polygon points="305.8,123.6 319.4,127.0 330.4,129.7" fill="#ffffff" stroke="#e2e2e7" stroke-width="0.7"/>
+<polygon points="298.2,152.3 311.3,155.7" fill="#ffffff" stroke="#e2e2e7" stroke-width="0.7"/>
+<polygon points="309.4,162.6 320.7,165.7" fill="#ffffff" stroke="#e2e2e7" stroke-width="0.7"/>
+<polygon points="274.2,218.4 292.2,223.2 318.9,229.8" fill="#ffffff" stroke="#e2e2e7" stroke-width="0.7"/>
+</g>
+<polygon points="306.0,88.0 334.0,88.0 334.0,104.0 306.0,104.0" fill="#0071e3" fill-opacity="0.9" stroke="#0071e3" stroke-width="2" stroke-linejoin="round"/>
+<g><rect x="292.3" y="115.9" width="18.8" height="13" rx="6.5" fill="#ffffff" stroke="#c7c7cf" stroke-width="0.8"/><text x="301.7" y="125.8" font-family="system-ui,-apple-system,sans-serif" font-size="8" font-weight="600" text-anchor="middle" fill="#3a3a3e">B5</text></g>
+<g><rect x="324.8" y="125.0" width="18.8" height="13" rx="6.5" fill="#ffffff" stroke="#c7c7cf" stroke-width="0.8"/><text x="334.2" y="134.9" font-family="system-ui,-apple-system,sans-serif" font-size="8" font-weight="600" text-anchor="middle" fill="#3a3a3e">B6</text></g>
+<g><rect x="319.3" y="36.2" width="18.8" height="13" rx="6.5" fill="#ffffff" stroke="#c7c7cf" stroke-width="0.8"/><text x="328.7" y="46.1" font-family="system-ui,-apple-system,sans-serif" font-size="8" font-weight="600" text-anchor="middle" fill="#3a3a3e">B1</text></g>
+<g><rect x="347.5" y="47.2" width="18.8" height="13" rx="6.5" fill="#ffffff" stroke="#c7c7cf" stroke-width="0.8"/><text x="356.9" y="57.1" font-family="system-ui,-apple-system,sans-serif" font-size="8" font-weight="600" text-anchor="middle" fill="#3a3a3e">B2</text></g>
+<g><rect x="284.4" y="147.0" width="18.8" height="13" rx="6.5" fill="#ffffff" stroke="#c7c7cf" stroke-width="0.8"/><text x="293.8" y="156.9" font-family="system-ui,-apple-system,sans-serif" font-size="8" font-weight="600" text-anchor="middle" fill="#3a3a3e">B7</text></g>
+<g><rect x="310.5" y="158.8" width="18.8" height="13" rx="6.5" fill="#ffffff" stroke="#c7c7cf" stroke-width="0.8"/><text x="319.9" y="168.7" font-family="system-ui,-apple-system,sans-serif" font-size="8" font-weight="600" text-anchor="middle" fill="#3a3a3e">B8</text></g>
+<g><rect x="261.9" y="209.2" width="18.8" height="13" rx="6.5" fill="#ffffff" stroke="#c7c7cf" stroke-width="0.8"/><text x="271.3" y="219.1" font-family="system-ui,-apple-system,sans-serif" font-size="8" font-weight="600" text-anchor="middle" fill="#3a3a3e">B9</text></g>
+<g><rect x="309.1" y="223.5" width="24.2" height="13" rx="6.5" fill="#ffffff" stroke="#c7c7cf" stroke-width="0.8"/><text x="321.2" y="233.4" font-family="system-ui,-apple-system,sans-serif" font-size="8" font-weight="600" text-anchor="middle" fill="#3a3a3e">B10</text></g>
+<g><rect x="183.8" y="-2.6" width="18.8" height="13" rx="6.5" fill="#ffffff" stroke="#c7c7cf" stroke-width="0.8"/><text x="193.2" y="7.3" font-family="system-ui,-apple-system,sans-serif" font-size="8" font-weight="600" text-anchor="middle" fill="#3a3a3e">A2</text></g>
+<g><rect x="184.1" y="-34.0" width="18.8" height="13" rx="6.5" fill="#ffffff" stroke="#c7c7cf" stroke-width="0.8"/><text x="193.5" y="-24.1" font-family="system-ui,-apple-system,sans-serif" font-size="8" font-weight="600" text-anchor="middle" fill="#3a3a3e">A1</text></g>
+<g><rect x="148.2" y="-1.5" width="18.8" height="13" rx="6.5" fill="#ffffff" stroke="#c7c7cf" stroke-width="0.8"/><text x="157.6" y="8.4" font-family="system-ui,-apple-system,sans-serif" font-size="8" font-weight="600" text-anchor="middle" fill="#3a3a3e">A4</text></g>
+<g><rect x="508.4" y="58.8" width="18.8" height="13" rx="6.5" fill="#ffffff" stroke="#c7c7cf" stroke-width="0.8"/><text x="517.8" y="68.7" font-family="system-ui,-apple-system,sans-serif" font-size="8" font-weight="600" text-anchor="middle" fill="#3a3a3e">C3</text></g>
+<g><rect x="150.4" y="-31.4" width="18.8" height="13" rx="6.5" fill="#ffffff" stroke="#c7c7cf" stroke-width="0.8"/><text x="159.8" y="-21.5" font-family="system-ui,-apple-system,sans-serif" font-size="8" font-weight="600" text-anchor="middle" fill="#3a3a3e">A3</text></g>
+<g><rect x="515.4" y="89.3" width="18.8" height="13" rx="6.5" fill="#ffffff" stroke="#c7c7cf" stroke-width="0.8"/><text x="524.8" y="99.2" font-family="system-ui,-apple-system,sans-serif" font-size="8" font-weight="600" text-anchor="middle" fill="#3a3a3e">C5</text></g>
+<g><rect x="530.1" y="154.1" width="18.8" height="13" rx="6.5" fill="#ffffff" stroke="#c7c7cf" stroke-width="0.8"/><text x="539.5" y="164.0" font-family="system-ui,-apple-system,sans-serif" font-size="8" font-weight="600" text-anchor="middle" fill="#3a3a3e">C9</text></g>
+<g><rect x="116.3" y="-37.2" width="18.8" height="13" rx="6.5" fill="#ffffff" stroke="#c7c7cf" stroke-width="0.8"/><text x="125.7" y="-27.3" font-family="system-ui,-apple-system,sans-serif" font-size="8" font-weight="600" text-anchor="middle" fill="#3a3a3e">A5</text></g>
+<g><rect x="544.1" y="59.1" width="18.8" height="13" rx="6.5" fill="#ffffff" stroke="#c7c7cf" stroke-width="0.8"/><text x="553.5" y="69.0" font-family="system-ui,-apple-system,sans-serif" font-size="8" font-weight="600" text-anchor="middle" fill="#3a3a3e">C2</text></g>
+<g><rect x="93.8" y="-7.4" width="18.8" height="13" rx="6.5" fill="#ffffff" stroke="#c7c7cf" stroke-width="0.8"/><text x="103.2" y="2.5" font-family="system-ui,-apple-system,sans-serif" font-size="8" font-weight="600" text-anchor="middle" fill="#3a3a3e">A6</text></g>
+<g><rect x="550.0" y="96.6" width="18.8" height="13" rx="6.5" fill="#ffffff" stroke="#c7c7cf" stroke-width="0.8"/><text x="559.4" y="106.5" font-family="system-ui,-apple-system,sans-serif" font-size="8" font-weight="600" text-anchor="middle" fill="#3a3a3e">C4</text></g>
+<g><rect x="560.8" y="148.0" width="18.8" height="13" rx="6.5" fill="#ffffff" stroke="#c7c7cf" stroke-width="0.8"/><text x="570.2" y="157.9" font-family="system-ui,-apple-system,sans-serif" font-size="8" font-weight="600" text-anchor="middle" fill="#3a3a3e">C6</text></g>
+<text x="320.0" y="80.0" font-family="system-ui,-apple-system,sans-serif" font-size="11" font-weight="700" text-anchor="middle" fill="#0071e3" paint-order="stroke" stroke="#f7f7f9" stroke-width="3.5">Admirals Club</text>
+<g opacity="0.75"><line x1="12" y1="180.0" x2="62.0" y2="180.0" stroke="#86868b" stroke-width="1.4"/><text x="12" y="176.0" font-family="system-ui,-apple-system,sans-serif" font-size="7.5" fill="#86868b">50 m</text></g>
+</svg>

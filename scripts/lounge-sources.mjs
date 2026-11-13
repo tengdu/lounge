@@ -77,182 +77,556 @@ export const AIRPORTS = {
   XNA: 'Bentonville',
 };
 
-// Lounge "brands". Each carries the access rules, an editorial quality tier
-// used to derive a rating, and a sentence describing what the lounge is like.
+// Full airport names. A maps app can find "Seattle–Tacoma International
+// Airport"; it cannot find "SEA". Also used as the accessible label for the
+// airport code on the detail page.
+export const AIRPORT_NAMES = {
+  ANC: 'Ted Stevens Anchorage International Airport',
+  ATL: 'Hartsfield–Jackson Atlanta International Airport',
+  AUS: 'Austin–Bergstrom International Airport',
+  BDL: 'Bradley International Airport',
+  BNA: 'Nashville International Airport',
+  BOS: 'Boston Logan International Airport',
+  BUF: 'Buffalo Niagara International Airport',
+  BWI: 'Baltimore/Washington International Thurgood Marshall Airport',
+  CHS: 'Charleston International Airport',
+  CLE: 'Cleveland Hopkins International Airport',
+  CLT: 'Charlotte Douglas International Airport',
+  CMH: 'John Glenn Columbus International Airport',
+  CVG: 'Cincinnati/Northern Kentucky International Airport',
+  DCA: 'Ronald Reagan Washington National Airport',
+  DEN: 'Denver International Airport',
+  DFW: 'Dallas/Fort Worth International Airport',
+  DTW: 'Detroit Metropolitan Wayne County Airport',
+  EWR: 'Newark Liberty International Airport',
+  FLL: 'Fort Lauderdale–Hollywood International Airport',
+  GRR: 'Gerald R. Ford International Airport',
+  GSP: 'Greenville–Spartanburg International Airport',
+  GUM: 'Antonio B. Won Pat International Airport',
+  HNL: 'Daniel K. Inouye International Airport',
+  IAD: 'Washington Dulles International Airport',
+  IAH: 'George Bush Intercontinental Airport',
+  IND: 'Indianapolis International Airport',
+  JAX: 'Jacksonville International Airport',
+  JFK: 'John F. Kennedy International Airport',
+  LAS: 'Harry Reid International Airport',
+  LAX: 'Los Angeles International Airport',
+  LGA: 'LaGuardia Airport',
+  MCI: 'Kansas City International Airport',
+  MCO: 'Orlando International Airport',
+  MDW: 'Chicago Midway International Airport',
+  MEM: 'Memphis International Airport',
+  MIA: 'Miami International Airport',
+  MKE: 'Milwaukee Mitchell International Airport',
+  MSP: 'Minneapolis–Saint Paul International Airport',
+  MSY: 'Louis Armstrong New Orleans International Airport',
+  OAK: 'San Francisco Bay Oakland International Airport',
+  OGG: 'Kahului Airport',
+  ORD: 'O’Hare International Airport',
+  PBI: 'Palm Beach International Airport',
+  PDX: 'Portland International Airport',
+  PHL: 'Philadelphia International Airport',
+  PHX: 'Phoenix Sky Harbor International Airport',
+  PIT: 'Pittsburgh International Airport',
+  PVD: 'Rhode Island T. F. Green International Airport',
+  RDU: 'Raleigh–Durham International Airport',
+  RNO: 'Reno–Tahoe International Airport',
+  SAN: 'San Diego International Airport',
+  SAT: 'San Antonio International Airport',
+  SEA: 'Seattle–Tacoma International Airport',
+  SFO: 'San Francisco International Airport',
+  SJC: 'San José Mineta International Airport',
+  SJU: 'Luis Muñoz Marín International Airport',
+  SLC: 'Salt Lake City International Airport',
+  SMF: 'Sacramento International Airport',
+  SNA: 'John Wayne Airport',
+  STL: 'St. Louis Lambert International Airport',
+  SYR: 'Syracuse Hancock International Airport',
+  TPA: 'Tampa International Airport',
+  TUL: 'Tulsa International Airport',
+  XNA: 'Northwest Arkansas National Airport',
+};
+
+// Everything a traveller can hold that opens a lounge door, and that stays
+// true from one trip to the next. Today's boarding pass is deliberately not in
+// here: cabin- and route-based entry is described on each brand, but it cannot
+// be answered in advance, so the access checker never claims it.
+export const CREDENTIALS = [
+  // --- lounge memberships you buy or earn outright ---
+  { id: 'delta-sky-club-member', group: 'membership', label: 'Delta Sky Club membership' },
+  { id: 'united-club-member', group: 'membership', label: 'United Club membership' },
+  { id: 'admirals-club-member', group: 'membership', label: 'Admirals Club membership' },
+  { id: 'alaska-lounge-member', group: 'membership', label: 'Alaska Lounge or Lounge+ membership' },
+  { id: 'premier-club-member', group: 'membership', label: 'Hawaiian Premier Club membership' },
+
+  // --- network programs ---
+  { id: 'priority-pass', group: 'program', label: 'Priority Pass or LoungeKey' },
+
+  // --- credit cards ---
+  { id: 'amex-platinum', group: 'card', label: 'Amex Platinum or Business Platinum' },
+  { id: 'amex-centurion', group: 'card', label: 'Amex Centurion' },
+  { id: 'delta-reserve', group: 'card', label: 'Delta SkyMiles Reserve' },
+  { id: 'venture-x', group: 'card', label: 'Capital One Venture X or Spark Travel Elite' },
+  { id: 'sapphire-reserve', group: 'card', label: 'Chase Sapphire Reserve or J.P. Morgan Reserve' },
+  { id: 'citi-aa-executive', group: 'card', label: 'Citi / AAdvantage Executive' },
+  { id: 'united-club-card', group: 'card', label: 'United Club Infinite or Business Card' },
+  { id: 'jetblue-premier', group: 'card', label: 'JetBlue Premier or Business Card' },
+
+  // --- airline elite status ---
+  { id: 'delta-360', group: 'status', label: 'Delta 360°' },
+  { id: 'skyteam-elite-plus', group: 'status', label: 'SkyTeam Elite Plus' },
+  { id: 'star-gold', group: 'status', label: 'Star Alliance Gold' },
+  { id: 'ow-sapphire', group: 'status', label: 'oneworld Sapphire' },
+  { id: 'ow-emerald', group: 'status', label: 'oneworld Emerald' },
+  { id: 'aa-exec-platinum', group: 'status', label: 'AAdvantage Executive Platinum' },
+  { id: 'mosaic-4', group: 'status', label: 'TrueBlue Mosaic 4' },
+
+  // --- everything else ---
+  { id: 'military-id', group: 'military', label: 'Military ID' },
+];
+
+// Display order and headings for the groups above, plus the two route kinds
+// that are never a stored credential.
+export const CREDENTIAL_GROUPS = [
+  { id: 'membership', label: 'Membership' },
+  { id: 'program', label: 'Lounge program' },
+  { id: 'card', label: 'Credit card' },
+  { id: 'status', label: 'Elite status' },
+  { id: 'cabin', label: "Today's ticket" },
+  { id: 'military', label: 'Military' },
+  { id: 'paid', label: 'Pay at the door' },
+];
+
+// Alliance membership by carrier, used to turn a foreign carrier's lounge into
+// a route the access checker can actually match. Keyed by a fragment of the
+// lounge name. Carriers in no alliance are listed as null so an unmapped name
+// is a genuine gap rather than a silent omission.
+export const CARRIER_ALLIANCES = {
+  'Aer Lingus': null,
+  'Air Canada': 'star',
+  'Air France': 'skyteam',
+  'Air India': 'star',
+  'Avianca': 'star',
+  'British Airways': 'oneworld',
+  'Cathay Pacific': 'oneworld',
+  'Chelsea Lounge': 'oneworld',
+  'China Airlines': 'skyteam',
+  'Emirates': null,
+  'Horizons': null,
+  'Iberia': 'oneworld',
+  'Japan Airlines': 'oneworld',
+  'JAL': 'oneworld',
+  'KAL': 'skyteam',
+  'KLM': 'skyteam',
+  'Korean Air': 'skyteam',
+  'LATAM': null,
+  'LOT': 'star',
+  'Lufthansa': 'star',
+  'oneworld': 'oneworld',
+  'Qantas': 'oneworld',
+  'Qatar': 'oneworld',
+  'SAS': 'skyteam',
+  'Star Alliance': 'star',
+  'Swiss': 'star',
+  'TAP': 'star',
+  'Turkish': 'star',
+  'Virgin Atlantic': 'skyteam',
+};
+
+// The elite tier each alliance admits to a business-class lounge, and to a
+// first-class lounge.
+export const ALLIANCE_STATUS = {
+  star: { business: 'star-gold', first: 'star-gold' },
+  oneworld: { business: 'ow-sapphire', first: 'ow-emerald' },
+  skyteam: { business: 'skyteam-elite-plus', first: 'skyteam-elite-plus' },
+};
+
+// Lounge "brands". Each carries an editorial quality tier, a sentence
+// describing the room, and a structured account of who gets in.
+//
+// `routes` lists every way through the door as a tuple:
+//
+//   [via, credential, label, note]
+//
+// `via` groups the route for display. `credential` is an id from CREDENTIALS
+// when the route turns on something the traveller holds year-round — those are
+// the routes the access checker matches. It is null when entry depends on
+// today's ticket or on buying in at the door.
+//
+// Access rules move constantly (visit caps, guest fees and day-pass
+// availability especially). These reflect published policy as of August 2026
+// and the site tells travellers to confirm before flying.
 export const BRANDS = {
   'delta-sky-club': {
-    access:
-      'Delta Sky Club members, Delta One and international business class passengers, Delta 360°/Diamond/Platinum Medallion members, SkyTeam Elite Plus on same-day Delta flights, and eligible Amex Delta Reserve and Platinum cardholders (visit limits apply).',
     tier: 4.3,
     blurb:
       'Delta’s flagship domestic club, with a hot-and-cold buffet, a full bar, fast Wi-Fi, and plenty of power-equipped seating.',
+    summary: 'Sky Club members, Delta One passengers, and eligible Amex cardholders with visits left.',
+    routes: [
+      ['membership', 'delta-sky-club-member', 'Delta Sky Club membership', 'Individual or Executive. Diamond and Platinum Medallions can take one as a Choice Benefit.'],
+      ['card', 'delta-reserve', 'Delta SkyMiles Reserve Card', 'Capped number of visits a year, lifted at high annual spend. Delta flights only.'],
+      ['card', 'amex-platinum', 'Amex Platinum or Business Platinum', 'Capped number of visits a year, and only when you are flying Delta.'],
+      ['status', 'delta-360', 'Delta 360° members', 'On any same-day Delta flight.'],
+      ['status', 'skyteam-elite-plus', 'SkyTeam Elite Plus', 'Only on a same-day international Delta or SkyTeam flight, not domestic.'],
+      ['cabin', null, 'Delta One passengers', 'Same-day Delta One or SkyTeam international business class.'],
+    ],
+    guests: 'Members may bring guests for a per-person fee; card-based entry usually admits the cardholder alone.',
+    arrival: 'Enter up to three hours before your departure, or any time while connecting.',
+    dayPass: null,
+    dayPassNote: 'Delta no longer sells single-visit passes — entry is by membership, card, or ticket.',
   },
   'delta-one': {
-    access:
-      'Delta One passengers on the same day of travel, Delta 360° members, and international SkyTeam business class passengers departing on qualifying flights.',
     tier: 4.8,
     blurb:
       'Delta’s premium long-haul lounge, with a seated à la carte restaurant, a cocktail bar, shower suites, and a quiet wellness area.',
+    summary: 'Delta One passengers and Delta 360° members only — a Sky Club membership does not open this door.',
+    routes: [
+      ['cabin', null, 'Delta One passengers', 'Same-day Delta One ticket on a qualifying long-haul route.'],
+      ['status', 'delta-360', 'Delta 360° members', 'Flying Delta the same day.'],
+    ],
+    guests: 'No guesting — admission is by eligible ticket only.',
+    arrival: 'Opens three hours before the first departure; entry within three hours of your flight.',
+    dayPass: null,
+    dayPassNote: 'Not for sale at any price. Sky Club members without a Delta One ticket are directed to the Sky Club.',
   },
   'united-club': {
-    access:
-      'United Club members and United Club Card holders, Star Alliance Gold members on same-day international itineraries, long-haul premium cabin passengers, and day-pass purchasers.',
     tier: 4.2,
     blurb:
       'A comfortable pre-flight retreat with complimentary snacks, a bar, productivity seating, and complimentary Wi-Fi.',
+    summary: 'United Club members and cardholders, long-haul premium passengers, and one-time pass buyers.',
+    routes: [
+      ['membership', 'united-club-member', 'United Club membership', 'Individual or corporate.'],
+      ['card', 'united-club-card', 'United Club Infinite or Business Card', 'Cardholder plus two guests or immediate family.'],
+      ['status', 'star-gold', 'Star Alliance Gold', 'Only on a same-day international itinerary — domestic-only trips do not qualify.'],
+      ['cabin', null, 'Long-haul premium cabin passengers', 'United Polaris or international business and first class.'],
+      ['paid', null, 'One-time pass', 'Bought with cash or miles, subject to capacity.'],
+    ],
+    guests: 'Members may bring one adult guest or their dependent children.',
+    arrival: 'Any time on the day you fly, as long as you hold a same-day boarding pass.',
+    dayPass: 'Sold in the United app and at the desk, subject to capacity.',
   },
   'united-club-fly': {
-    access:
-      'United Club members and eligible cardholders. One-time passes are not accepted at United Club Fly locations.',
     tier: 3.9,
     blurb:
       'United’s compact grab-and-go format, built for short connections: packaged food, self-serve drinks, and limited seating.',
+    summary: 'United Club members and cardholders only — one-time passes are not accepted here.',
+    routes: [
+      ['membership', 'united-club-member', 'United Club membership', ''],
+      ['card', 'united-club-card', 'United Club Infinite or Business Card', ''],
+    ],
+    guests: 'Guest rules follow the standard United Club, but seating is tight and entry can be capped.',
+    arrival: 'Same-day boarding pass required.',
+    dayPass: null,
+    dayPassNote: 'One-time passes are not accepted at United Club Fly locations.',
   },
   'united-polaris': {
-    access:
-      'United Polaris business class passengers and Star Alliance international first and business class passengers departing the same day.',
     tier: 4.8,
     blurb:
       'United’s premium international lounge, with a sit-down dining room, private daybeds, shower suites, and a well-stocked bar.',
+    summary: 'Same-day international business and first class passengers only. Status and memberships do not get you in.',
+    routes: [
+      ['cabin', null, 'United Polaris business class', 'Same-day departure on a Polaris-configured international flight.'],
+      ['cabin', null, 'Star Alliance international first or business class', 'Departing the same day on a partner airline.'],
+    ],
+    guests: 'No guests, including for Premier 1K members and United Club cardholders.',
+    arrival: 'Opens with the first Polaris departure bank; enter any time before your flight.',
+    dayPass: null,
+    dayPassNote: 'Never sold. A United Club membership does not admit you.',
   },
   admirals: {
-    access:
-      'Admirals Club members, qualifying Citi/AAdvantage cardholders, Flagship First and Business passengers, and eligible oneworld elite members on same-day travel. Day passes available.',
     tier: 4.1,
     blurb:
       'American’s core club, offering complimentary light bites, a self-serve bar, workspaces, and shower suites at larger locations.',
+    summary: 'Admirals Club members, Citi/AAdvantage Executive cardholders, Flagship passengers, and day-pass buyers.',
+    routes: [
+      ['membership', 'admirals-club-member', 'Admirals Club membership', 'Annual or lifetime.'],
+      ['card', 'citi-aa-executive', 'Citi / AAdvantage Executive Card', 'Cardholder plus up to two guests or immediate family.'],
+      ['status', 'ow-sapphire', 'oneworld Sapphire or Emerald', 'Only on a same-day international oneworld flight — not on domestic trips.'],
+      ['cabin', null, 'Flagship First or Flagship Business passengers', 'On qualifying long-haul or transcontinental routes.'],
+      ['paid', null, 'Day pass', 'Sold online or at the door, subject to capacity.'],
+    ],
+    guests: 'Members bring two guests or immediate family; extra guests pay a per-person fee.',
+    arrival: 'Same-day boarding pass on American or a partner airline required.',
+    dayPass: 'Sold online in advance or at the door.',
   },
   provisions: {
-    access:
-      'Admirals Club members and eligible AAdvantage elite and premium cabin customers on same-day travel.',
     tier: 3.9,
     blurb:
       'A grab-and-go outpost of the Admirals Club, built for quick stops: packaged meals, barista drinks, and limited seating.',
+    summary: 'Admirals Club members and eligible AAdvantage elite and premium-cabin customers.',
+    routes: [
+      ['membership', 'admirals-club-member', 'Admirals Club membership', ''],
+      ['card', 'citi-aa-executive', 'Citi / AAdvantage Executive Card', ''],
+      ['status', 'ow-sapphire', 'oneworld Sapphire or Emerald', 'On a same-day qualifying international flight.'],
+      ['cabin', null, 'Premium cabin passengers', 'Flagship or eligible same-day premium tickets.'],
+    ],
+    guests: 'Seating is minimal — guesting is limited and may be refused at capacity.',
+    arrival: 'Same-day boarding pass required.',
+    dayPass: null,
+    dayPassNote: 'Not sold at Provisions locations.',
   },
   flagship: {
-    access:
-      'International first and business class passengers on qualifying long-haul routes, plus oneworld Emerald members and AAdvantage Executive Platinum members on eligible itineraries.',
     tier: 4.6,
     blurb:
       'American’s premium international lounge, with a chef-driven buffet, a proper cocktail bar, showers, and quiet seating zones.',
+    summary: 'Long-haul Flagship First and Business passengers, plus oneworld Emerald members.',
+    routes: [
+      ['cabin', null, 'Flagship First or Flagship Business', 'On qualifying long-haul international or transcontinental routes.'],
+      ['status', 'ow-emerald', 'oneworld Emerald', 'On a same-day qualifying international flight.'],
+      ['status', 'aa-exec-platinum', 'AAdvantage Executive Platinum', 'On eligible long-haul itineraries.'],
+    ],
+    guests: 'Emerald members may bring one guest travelling on the same day.',
+    arrival: 'Same-day qualifying boarding pass required; no early entry the day before.',
+    dayPass: null,
+    dayPassNote: 'Not sold. An Admirals Club membership does not admit you.',
   },
   alaska: {
-    access:
-      'Alaska Lounge members and day-pass holders, Alaska first class passengers on long-haul routes, and oneworld Sapphire and Emerald members on same-day qualifying flights.',
     tier: 4.4,
     blurb:
       'A Pacific Northwest-inspired lounge known for its pancake machine, barista-made espresso, local beer and wine, and big airfield windows.',
+    summary: 'Alaska Lounge members, long-haul first class passengers, oneworld elites, and day-pass buyers.',
+    routes: [
+      ['membership', 'alaska-lounge-member', 'Alaska Lounge or Lounge+ membership', 'Lounge+ adds partner lounges worldwide.'],
+      ['status', 'ow-sapphire', 'oneworld Sapphire or Emerald', 'On a same-day qualifying flight.'],
+      ['cabin', null, 'Alaska first class', 'On flights over roughly 2,100 miles.'],
+      ['paid', null, 'Day pass', 'Sold in the Alaska app, subject to capacity.'],
+    ],
+    guests: 'Lounge+ members bring two guests; standard members pay per guest.',
+    arrival: 'Same-day boarding pass on Alaska or a partner airline required.',
+    dayPass: 'Sold in the Alaska app and at the desk.',
   },
   centurion: {
-    access:
-      'American Express Platinum, Business Platinum, and Centurion cardholders, plus Delta SkyMiles Reserve cardholders flying Delta. Guest fees apply for most cardholders.',
     tier: 4.6,
     blurb:
       'American Express’ flagship lounge, with a locally inspired menu from a named chef, a craft cocktail bar, and a dedicated family room.',
+    summary: 'Amex Platinum and Centurion cardholders flying the same day. The card is the only way in.',
+    routes: [
+      ['card', 'amex-platinum', 'Amex Platinum or Business Platinum', 'Flying the same day on any airline.'],
+      ['card', 'amex-centurion', 'Amex Centurion', 'Cardholder plus two guests included.'],
+      ['card', 'delta-reserve', 'Delta SkyMiles Reserve', 'Only when you are flying Delta that day.'],
+    ],
+    guests: 'Platinum cardholders pay a per-guest fee unless they hit the annual spend threshold; Centurion members bring two free.',
+    arrival: 'Enter up to three hours before departure, or any time while connecting.',
+    dayPass: null,
+    dayPassNote: 'No day passes and no walk-ins — an eligible card is the ticket.',
   },
   'capital-one-lounge': {
-    access:
-      'Capital One Venture X, Venture X Business, and Spark Travel Elite cardholders. Other Capital One cardholders and guests may buy a day pass.',
     tier: 4.5,
     blurb:
       'A wellness-minded lounge with a made-to-order menu, a self-pour tap wall, peloton bikes, and grab-and-go for tight connections.',
+    summary: 'Venture X and Spark Travel Elite cardholders; everyone else can buy a day pass.',
+    routes: [
+      ['card', 'venture-x', 'Venture X, Venture X Business or Spark Travel Elite', 'Cardholder access on a same-day flight.'],
+      ['paid', null, 'Day pass', 'Open to other Capital One cardholders and to guests.'],
+    ],
+    guests: 'Guest allowance depends on your annual card spend; beyond it, guests pay a per-person fee.',
+    arrival: 'Enter up to three hours before departure. Reserve ahead at busy locations.',
+    dayPass: 'Sold to other Capital One cardholders and accompanying guests.',
   },
   'capital-one-landing': {
-    access:
-      'Capital One Venture X, Venture X Business, and Spark Travel Elite cardholders. Day passes available for other travelers.',
     tier: 4.3,
     blurb:
       'Capital One’s restaurant-style format: a full-service dining room and bar with a smaller lounge seating area alongside.',
+    summary: 'Venture X and Spark Travel Elite cardholders, with day passes for other travellers.',
+    routes: [
+      ['card', 'venture-x', 'Venture X, Venture X Business or Spark Travel Elite', 'Cardholder access on a same-day flight.'],
+      ['paid', null, 'Day pass', 'Available to other travellers, subject to capacity.'],
+    ],
+    guests: 'Guest allowance depends on annual card spend; extra guests pay a fee.',
+    arrival: 'Walk-ins accepted; reservations recommended for the dining room.',
+    dayPass: 'Sold to non-cardholders, subject to capacity.',
   },
   'chase-sapphire': {
-    access:
-      'Chase Sapphire Reserve, J.P. Morgan Reserve, and Ritz-Carlton cardholders. Priority Pass members receive limited annual access. Day passes available.',
     tier: 4.6,
     blurb:
       'A design-forward lounge from Chase and The Club, with a full restaurant menu, a cocktail program, showers, and wellness suites.',
+    summary: 'Sapphire Reserve cardholders, with limited Priority Pass visits and day passes.',
+    routes: [
+      ['card', 'sapphire-reserve', 'Sapphire Reserve, J.P. Morgan Reserve or Ritz-Carlton', 'Unlimited visits on a same-day flight.'],
+      ['program', 'priority-pass', 'Priority Pass', 'A limited number of visits a year, subject to capacity.'],
+      ['paid', null, 'Day pass', 'Sold when space allows.'],
+    ],
+    guests: 'Reserve cardholders bring two guests at no charge; Priority Pass guests pay.',
+    arrival: 'Same-day boarding pass required; enter up to three hours before departure.',
+    dayPass: 'Sold at the door when capacity allows.',
   },
   'chase-sapphire-terrace': {
-    access:
-      'Chase Sapphire Reserve and J.P. Morgan Reserve cardholders, plus Priority Pass members subject to capacity.',
     tier: 4.4,
     blurb:
       'A smaller Sapphire-branded terrace with local food and drink, natural light, and an outdoor-feeling seating area.',
+    summary: 'Sapphire Reserve cardholders and Priority Pass members, subject to capacity.',
+    routes: [
+      ['card', 'sapphire-reserve', 'Sapphire Reserve or J.P. Morgan Reserve', ''],
+      ['program', 'priority-pass', 'Priority Pass', 'Subject to capacity — this is a small room.'],
+    ],
+    guests: 'Limited guesting; expect to be turned away at peak times.',
+    arrival: 'Same-day boarding pass required.',
+    dayPass: null,
+    dayPassNote: 'Not sold — capacity is reserved for cardholders and pass members.',
   },
   escape: {
-    access:
-      'American Express Platinum and Centurion cardholders (as a Centurion Studio Partner), Priority Pass members, and walk-in day-pass purchasers.',
     tier: 4.0,
     blurb:
       'An independent lounge with a locally sourced hot buffet, complimentary beer and wine, and a calm, well-lit seating area.',
+    summary: 'Amex Platinum and Centurion cardholders, Priority Pass members, and walk-in day-pass buyers.',
+    routes: [
+      ['card', 'amex-platinum', 'Amex Platinum or Business Platinum', 'Admitted as a Centurion Studio Partner lounge.'],
+      ['card', 'amex-centurion', 'Amex Centurion', ''],
+      ['program', 'priority-pass', 'Priority Pass', 'One visit per member per day.'],
+      ['paid', null, 'Walk-in day pass', 'Cheaper booked online in advance than at the door.'],
+    ],
+    guests: 'Guests pay the standard day-pass rate unless your card or pass includes them.',
+    arrival: 'Book ahead at peak hours — these lounges are small and fill early.',
+    dayPass: 'Sold online in advance at a discount, or at the door.',
   },
   'the-club': {
-    access: 'Priority Pass and LoungeKey members, participating airline passengers, and day-pass purchasers.',
     tier: 3.9,
     blurb:
       'An independent common-use lounge with self-serve snacks, complimentary beer and wine, showers at some locations, and quiet seating.',
+    summary: 'Priority Pass and LoungeKey members, participating airline passengers, and day-pass buyers.',
+    routes: [
+      ['program', 'priority-pass', 'Priority Pass or LoungeKey', ''],
+      ['cabin', null, 'Participating airline premium passengers', 'Varies by airport — check with your carrier.'],
+      ['paid', null, 'Day pass', 'Walk-up or booked online.'],
+    ],
+    guests: 'Guests admitted at the day-pass rate, or free depending on your pass tier.',
+    arrival: 'Same-day boarding pass required.',
+    dayPass: 'Sold online and at the door.',
   },
   'plaza-premium': {
-    access: 'Priority Pass members, participating airline premium passengers, and day-pass purchasers.',
     tier: 4.0,
     blurb:
       'A pay-in common-use lounge with a hot buffet, a bar, shower rooms, and optional private rest suites.',
+    summary: 'Priority Pass members, partner airline premium passengers, and anyone willing to pay.',
+    routes: [
+      ['program', 'priority-pass', 'Priority Pass', 'Accepted at most, though not all, locations.'],
+      ['cabin', null, 'Premium cabin passengers on participating airlines', ''],
+      ['paid', null, 'Day pass', 'Sold by the hour or for a fixed stay.'],
+    ],
+    guests: 'Guests pay the walk-in rate.',
+    arrival: 'Walk-ins welcome; rest suites should be booked ahead.',
+    dayPass: 'Sold by duration — typically a two- or six-hour stay.',
   },
   'plaza-premium-first': {
-    access: 'Premium cabin passengers on partner airlines and day-pass purchasers. Priority Pass is not accepted.',
     tier: 4.4,
     blurb:
       'Plaza Premium’s upgraded first-class product, with à la carte dining, a champagne bar, and private shower suites.',
+    summary: 'Partner airline premium passengers and paying guests. Priority Pass is not accepted.',
+    routes: [
+      ['cabin', null, 'Premium cabin passengers on partner airlines', ''],
+      ['paid', null, 'Day pass', 'Premium rate, booked ahead or at the door.'],
+    ],
+    guests: 'Guests pay the full walk-in rate.',
+    arrival: 'Reserve ahead — capacity is deliberately small.',
+    dayPass: 'Sold at a premium rate.',
+    dayPassNote: 'Priority Pass is not accepted at the First format.',
   },
   uso: {
-    access:
-      'Active-duty service members, National Guard and Reserve, retirees, and their dependents with valid military ID.',
     tier: 4.8,
     blurb:
       'A free lounge for the military community, with snacks, hot drinks, family space, rest areas, and volunteer-run hospitality.',
+    summary: 'Free for the military community with valid ID — active duty, Guard, Reserve, retirees, and dependents.',
+    routes: [
+      ['military', 'military-id', 'Valid military ID', 'Active duty, National Guard, Reserve, retirees, and dependents.'],
+    ],
+    guests: 'Immediate family travelling with you are welcome.',
+    arrival: 'No boarding pass needed at pre-security locations; hours vary by centre.',
+    dayPass: null,
+    dayPassNote: 'Always free — the USO never charges for entry.',
   },
   military: {
-    access: 'Active-duty, retired, and veteran service members and their families with valid identification.',
     tier: 4.7,
     blurb: 'A volunteer-run hospitality lounge offering refreshments, quiet seating, and a place to rest between flights.',
+    summary: 'Free for service members, veterans, and their families with valid identification.',
+    routes: [
+      ['military', 'military-id', 'Valid military or veteran ID', 'Active duty, retired, and veteran service members and their families.'],
+    ],
+    guests: 'Family members travelling with you are welcome.',
+    arrival: 'Hours depend on volunteer staffing — check before you rely on it.',
+    dayPass: null,
+    dayPassNote: 'Always free.',
   },
   'foreign-business': {
-    access:
-      'Business class passengers and eligible alliance elite members on the operating carrier, plus Priority Pass members at participating locations.',
     tier: 4.3,
     blurb:
       'An airline-operated international lounge with a hot buffet reflecting the carrier’s home cuisine, a full bar, and showers.',
+    summary: 'Business class passengers and alliance elite members on the operating carrier.',
+    routes: [
+      ['cabin', null, 'Business class on the operating carrier', 'Same-day international departure.'],
+      ['program', 'priority-pass', 'Priority Pass', 'At participating locations only — many of these lounges do not accept it.'],
+    ],
+    guests: 'Guest rules are set by the operating carrier; most admit one guest for elite members.',
+    arrival: 'Same-day boarding pass on the operating carrier or a partner required.',
+    dayPass: null,
+    dayPassNote: 'Rarely sold. Some carriers admit paying walk-ins when quiet — ask at the desk.',
   },
   'foreign-first': {
-    access:
-      'First class passengers and top-tier elite members on the operating carrier and its alliance partners.',
     tier: 4.7,
     blurb:
       'A first-class lounge with à la carte dining, premium champagne, private shower suites, and dedicated attentive service.',
+    summary: 'First class passengers and top-tier elite members on the operating carrier and its partners.',
+    routes: [
+      ['cabin', null, 'First class on the operating carrier', 'Same-day international departure.'],
+    ],
+    guests: 'Usually one guest, and only when travelling on the same itinerary.',
+    arrival: 'Same-day first class boarding pass required.',
+    dayPass: null,
+    dayPassNote: 'Not sold at any price.',
   },
   alliance: {
-    access:
-      'International first and business class passengers and alliance Gold members departing on partner airlines the same day.',
     tier: 4.5,
     blurb:
       'A shared alliance lounge serving multiple partner carriers, with an extensive buffet, a full bar, showers, and terrace seating.',
+    summary: 'International first and business class passengers and alliance Gold members on partner airlines.',
+    routes: [
+      ['cabin', null, 'International first or business class', 'Departing the same day on a member airline.'],
+    ],
+    guests: 'Elite members may bring one guest travelling on a partner airline the same day.',
+    arrival: 'Same-day international boarding pass on a member airline required.',
+    dayPass: null,
+    dayPassNote: 'Not sold — alliance lounges admit by ticket and status only.',
   },
   independent: {
-    access: 'Priority Pass and LoungeKey members, participating airline passengers, and day-pass purchasers.',
     tier: 3.9,
     blurb:
       'An independent lounge open to pass holders and walk-ins, with complimentary refreshments, Wi-Fi, and quiet seating.',
+    summary: 'Priority Pass and LoungeKey members, participating airline passengers, and day-pass buyers.',
+    routes: [
+      ['program', 'priority-pass', 'Priority Pass or LoungeKey', ''],
+      ['cabin', null, 'Participating airline passengers', 'Varies by airport.'],
+      ['paid', null, 'Day pass', 'Walk-up rate, subject to capacity.'],
+    ],
+    guests: 'Guests pay the walk-in rate.',
+    arrival: 'Same-day boarding pass required.',
+    dayPass: 'Sold at the door.',
   },
   jetblue: {
-    access:
-      'JetBlue transatlantic Mint passengers, TrueBlue Mosaic 4 members, and eligible JetBlue Premier card holders.',
     tier: 4.4,
     blurb:
       'JetBlue’s lounge concept, with a seated dining area, a self-pour bar, and a bright lounge space for Mint travelers.',
+    summary: 'Transatlantic Mint passengers, Mosaic 4 members, and eligible JetBlue cardholders.',
+    routes: [
+      ['status', 'mosaic-4', 'TrueBlue Mosaic 4', 'On a same-day JetBlue flight.'],
+      ['card', 'jetblue-premier', 'JetBlue Premier or Business Card', 'Limited visits a year.'],
+      ['cabin', null, 'Transatlantic Mint passengers', 'Same-day Mint ticket on a transatlantic route.'],
+    ],
+    guests: 'One guest for Mosaic 4 members; Mint passengers enter alone unless travelling together.',
+    arrival: 'Same-day JetBlue boarding pass required.',
+    dayPass: null,
+    dayPassNote: 'Not sold.',
   },
   hawaiian: {
-    access: 'Hawaiian Airlines first class passengers, Premier Club members, and day-pass purchasers.',
     tier: 4.0,
     blurb: 'An island-relaxed lounge with local snacks, tropical drinks, complimentary Wi-Fi, and comfortable seating.',
+    summary: 'Hawaiian first class passengers, Premier Club members, and day-pass buyers.',
+    routes: [
+      ['membership', 'premier-club-member', 'Premier Club membership', 'Annual membership sold by Hawaiian.'],
+      ['cabin', null, 'Hawaiian first class', 'Same-day first class ticket.'],
+      ['paid', null, 'Day pass', 'Sold at the desk, subject to capacity.'],
+    ],
+    guests: 'Premier Club members may bring guests for a fee.',
+    arrival: 'Same-day Hawaiian boarding pass required.',
+    dayPass: 'Sold at the desk.',
   },
 };
 
@@ -362,15 +736,139 @@ export const BRAND_AMENITIES = {
 // Real, freely-licensed photographs of specific lounges, keyed by lounge id.
 // Anything not listed here falls back to brand-consistent generic art.
 //
-// Every entry must be a free license (CC BY / CC BY-SA / public domain) with
-// attribution recorded in CREDITS.md — this site is published publicly, so
-// airline and card-issuer press photos are not usable here.
+// Every entry must be a free license (CC BY / CC BY-SA / public domain). The
+// attribution here is rendered on the page, not just filed in CREDITS.md,
+// because that is what these licenses actually require. Airline and
+// card-issuer press photos are not usable, however freely they are handed out.
+//
+// Candidates come from `node scripts/harvest-photos.mjs`, but nothing lands
+// here until a human has looked at the image: the harvester cheerfully
+// matched a ribbon-cutting, a plate of hummus, and a USO tour in Iraq.
+//
+//   scope 'exact'   — this room.
+//   scope 'airport' — this operator at this airport, but possibly a sibling
+//                     room; the airport has several and the source did not say.
+//   kind  'interior'/'entrance' — what you are actually looking at.
+//
 // Source files live in assets/lounges/real/.
 export const LOUNGE_PHOTOS = {
-  'sea-alaska-lounge-north-satellite-mezzanine-above-gates-n13-to-n18':
-    'sea-alaska-lounge-north-satellite',
-  'sea-delta-sky-club-concourse-a-near-gate-a1': 'sea-delta-sky-club-a',
-  'sea-delta-sky-club-concourse-a-near-gate-a11': 'sea-delta-sky-club-b',
+  'bwi-the-club-bwi-concourse-d-airside-upper-level': {
+    file: 'bwi-the-club',
+    scope: 'exact',
+    kind: 'interior',
+    credit: 'G. Edward Johnson',
+    license: 'CC BY 4.0',
+    licenseUrl: 'https://creativecommons.org/licenses/by/4.0/',
+    source: 'https://commons.wikimedia.org/wiki/File:The_Club_lounge_interior_BWI_MD_2025-05-13_15-38-50_1.jpg',
+  },
+  'dca-delta-sky-club-terminal-2-above-gate-b15': {
+    file: 'dca-delta-sky-club',
+    scope: 'exact',
+    kind: 'entrance',
+    credit: 'G. Edward Johnson',
+    license: 'CC BY 4.0',
+    licenseUrl: 'https://creativecommons.org/licenses/by/4.0/',
+    source: 'https://commons.wikimedia.org/wiki/File:Delta_Sky_Club_lounge_entrance_DCA_National_Airport_2025-10-22_13-11-26.jpg',
+  },
+  'dca-united-club-terminal-2-across-from-gate-b11': {
+    file: 'dca-united-club',
+    scope: 'exact',
+    kind: 'entrance',
+    credit: 'G. Edward Johnson',
+    license: 'CC BY 4.0',
+    licenseUrl: 'https://creativecommons.org/licenses/by/4.0/',
+    source: 'https://commons.wikimedia.org/wiki/File:United_Club_lounge_entrance_DCA_National_Airport_2025-10-22_13-14-06.jpg',
+  },
+  'iad-capital-one-lounge-main-terminal-directly-after-the-tsa-precheck-checkpoint': {
+    file: 'iad-capital-one-lounge',
+    scope: 'exact',
+    kind: 'entrance',
+    credit: 'G. Edward Johnson',
+    license: 'CC BY 4.0',
+    licenseUrl: 'https://creativecommons.org/licenses/by/4.0/',
+    source: 'https://commons.wikimedia.org/wiki/File:Capital_One_Lounge_entrance_Dulles_Airport_VA_2025-09-02_19-48-01_1.jpg',
+  },
+  'jfk-chase-sapphire-lounge-by-the-club-terminal-4-upper-level-after-security': {
+    file: 'jfk-chase-sapphire-lounge',
+    scope: 'exact',
+    kind: 'entrance',
+    credit: 'Ajay Suresh',
+    license: 'CC BY 4.0',
+    licenseUrl: 'https://creativecommons.org/licenses/by/4.0/',
+    source: 'https://commons.wikimedia.org/wiki/File:Chase_Sapphire_Lounge_-_JFK_Terminal_4_(54984999499).jpg',
+  },
+  'jfk-the-centurion-lounge-terminal-4-level-4-beyond-the-tsa-checkpoints': {
+    file: 'jfk-centurion-lounge',
+    scope: 'exact',
+    kind: 'entrance',
+    credit: 'Ajay Suresh',
+    license: 'CC BY 4.0',
+    licenseUrl: 'https://creativecommons.org/licenses/by/4.0/',
+    source: 'https://commons.wikimedia.org/wiki/File:American_Express_Centurion_Lounge_-_JFK_Terminal_4_(54984753321).jpg',
+  },
+  'lax-united-club-terminal-7-level-3-near-gate-71a': {
+    file: 'lax-united-club-t7',
+    scope: 'exact',
+    kind: 'entrance',
+    credit: 'ZhengZhou',
+    license: 'CC BY-SA 4.0',
+    licenseUrl: 'https://creativecommons.org/licenses/by-sa/4.0/',
+    source: 'https://commons.wikimedia.org/wiki/File:United_Club_at_LAX_Terminal_7.png',
+  },
+  'mia-delta-sky-club-concourse-h-inside-the-h-j-connector': {
+    file: 'mia-delta-sky-club',
+    scope: 'exact',
+    kind: 'interior',
+    credit: 'DearEdward',
+    license: 'CC BY 2.0',
+    licenseUrl: 'https://creativecommons.org/licenses/by/2.0/',
+    source: 'https://commons.wikimedia.org/wiki/File:Delta_Sky_Club_@MIA_(7879899742).jpg',
+  },
+  'ord-united-club-terminal-1-concourse-b-near-gate-b6': {
+    file: 'ord-united-club',
+    scope: 'airport',
+    kind: 'interior',
+    credit: 'BlakMyers',
+    license: 'CC BY-SA 4.0',
+    licenseUrl: 'https://creativecommons.org/licenses/by-sa/4.0/',
+    source: 'https://commons.wikimedia.org/wiki/File:United_Club_ORD.jpg',
+  },
+  'ord-united-polaris-lounge-terminal-1-concourse-c-near-gate-c18': {
+    file: 'ord-polaris-lounge',
+    scope: 'exact',
+    kind: 'entrance',
+    credit: 'Crishazzard',
+    license: 'CC BY-SA 4.0',
+    licenseUrl: 'https://creativecommons.org/licenses/by-sa/4.0/',
+    source: 'https://commons.wikimedia.org/wiki/File:Entrance_Sign_for_United_Polaris_Lounge_at_ORD_(Chicago)_Airport.jpg',
+  },
+  'sea-alaska-lounge-north-satellite-mezzanine-above-gates-n13-to-n18': {
+    file: 'sea-alaska-lounge-north-satellite',
+    scope: 'exact',
+    kind: 'interior',
+    credit: 'Zheng Zhou',
+    license: 'CC BY-SA 4.0',
+    licenseUrl: 'https://creativecommons.org/licenses/by-sa/4.0/',
+    source: 'https://commons.wikimedia.org/wiki/File:Alaska_Lounge_at_N_Concourse_of_Sea-Tac_Airport.jpg',
+  },
+  'sea-delta-sky-club-concourse-a-near-gate-a1': {
+    file: 'sea-delta-sky-club-a',
+    scope: 'exact',
+    kind: 'interior',
+    credit: 'Delta News Hub',
+    license: 'CC BY 2.0',
+    licenseUrl: 'https://creativecommons.org/licenses/by/2.0/',
+    source: 'https://commons.wikimedia.org/wiki/File:The_new_Delta_Sky_Club_in_Seattle_(30367396621).jpg',
+  },
+  'sea-delta-sky-club-concourse-a-near-gate-a11': {
+    file: 'sea-delta-sky-club-b',
+    scope: 'exact',
+    kind: 'interior',
+    credit: 'Delta News Hub',
+    license: 'CC BY 2.0',
+    licenseUrl: 'https://creativecommons.org/licenses/by/2.0/',
+    source: 'https://commons.wikimedia.org/wiki/File:The_new_Delta_Sky_Club_in_Seattle_(30156183840).jpg',
+  },
 };
 
 // Generic art assigned per brand, so every Alaska Lounge looks like an Alaska

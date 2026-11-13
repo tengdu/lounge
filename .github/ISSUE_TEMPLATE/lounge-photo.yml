@@ -1,0 +1,96 @@
+name: Contribute a lounge photo
+description: Share a photo of a lounge so it can replace the generic art.
+title: "Photo: <lounge> — <airport>"
+labels: ["photo-submission"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for helping. Almost every lounge on the site currently shows
+        generic interior art, because photographs of specific lounges under a
+        license that permits redistribution barely exist — airline and
+        card-issuer press photos are copyrighted no matter how freely they are
+        handed out.
+
+        A photo **you took yourself** solves that, because you are the one who
+        can license it.
+
+  - type: input
+    id: lounge_id
+    attributes:
+      label: Lounge ID
+      description: Pre-filled from the site. Please leave it as it is.
+    validations:
+      required: true
+
+  - type: input
+    id: lounge_name
+    attributes:
+      label: Lounge
+      description: Pre-filled from the site.
+    validations:
+      required: true
+
+  - type: textarea
+    id: photo
+    attributes:
+      label: The photo
+      description: |
+        Drag the image in here, or paste it. Landscape works best — the site
+        crops to 16:9 for the page header and 3:2 for the grid card.
+        Full resolution is fine; it gets downscaled and re-encoded on the way in.
+      placeholder: Drop the image here…
+    validations:
+      required: true
+
+  - type: dropdown
+    id: subject
+    attributes:
+      label: What does it show?
+      options:
+        - The inside of the lounge
+        - The entrance / signage
+    validations:
+      required: true
+
+  - type: input
+    id: credit
+    attributes:
+      label: How should you be credited?
+      description: The name shown on the lounge page next to the photo.
+    validations:
+      required: true
+
+  - type: dropdown
+    id: license
+    attributes:
+      label: License
+      description: |
+        The site is public, so the photo needs a license that permits
+        redistribution. CC BY means you keep the credit; CC0 waives it.
+      options:
+        - CC BY 4.0 — credit me
+        - CC BY-SA 4.0 — credit me, share-alike
+        - CC0 1.0 — public domain, no credit needed
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: confirmations
+    attributes:
+      label: Please confirm
+      options:
+        - label: I took this photo myself, and I am licensing it as chosen above.
+          required: true
+        - label: It is a photo of the lounge named above, not a different one.
+          required: true
+        - label: No identifiable strangers are the subject of the photo.
+          required: true
+
+  - type: textarea
+    id: notes
+    attributes:
+      label: Anything else?
+      description: When it was taken, which room it is, anything that has changed since.
+    validations:
+      required: false

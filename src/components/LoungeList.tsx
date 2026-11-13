@@ -6,12 +6,24 @@ import { Lounge } from "@/data/lounges";
 
 interface LoungeListProps {
   lounges: Lounge[];
+  /** Identifies the search/filter that produced `lounges`. */
+  stateKey: string;
 }
 
 const PAGE_SIZE = 24;
 
-export default function LoungeList({ lounges }: LoungeListProps) {
-  const [visible, setVisible] = useState(PAGE_SIZE);
+/**
+ * How far the last list was paged, kept outside React so it outlives the
+ * component. Coming back from a lounge remounts this list; if it restarted at
+ * one page it would be shorter than it was, and the browser could not put the
+ * traveller back on the card they left — it would clamp to the new bottom.
+ */
+let remembered: { key: string; visible: number } | null = null;
+
+export default function LoungeList({ lounges, stateKey }: LoungeListProps) {
+  const [visible, setVisible] = useState(() =>
+    remembered?.key === stateKey ? remembered.visible : PAGE_SIZE
+  );
   const [renderedFor, setRenderedFor] = useState(lounges);
   const sentinelRef = useRef<HTMLDivElement | null>(null);
 
@@ -22,6 +34,10 @@ export default function LoungeList({ lounges }: LoungeListProps) {
     setRenderedFor(lounges);
     setVisible(PAGE_SIZE);
   }
+
+  useEffect(() => {
+    remembered = { key: stateKey, visible };
+  }, [stateKey, visible]);
 
   const shown = useMemo(() => lounges.slice(0, visible), [lounges, visible]);
   const hasMore = visible < lounges.length;

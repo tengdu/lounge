@@ -34,3 +34,10 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# regenerable output of scripts/harvest-photos.mjs; provenance for anything
+# actually used lives in CREDITS.md
+/scripts/harvest-report.json
+
+# cached Overpass responses for scripts/fetch-indoor-maps.mjs
+/.cache

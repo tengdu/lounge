@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 192" role="img" aria-label="Floor plan showing Delta Sky Club and nearby gates">
+<rect width="100%" height="100%" fill="#f7f7f9"/>
+<g>
+<polygon points="329.9,21.1 330.4,49.6 331.0,91.2 331.7,126.1 332.7,178.2 332.8,186.3 333.2,208.1 333.9,247.1 334.7,289.2 335.1,317.4 335.7,350.5 336.2,378.3" fill="#ffffff" stroke="#e2e2e7" stroke-width="0.7"/>
+<polygon points="314.2,178.4 332.7,178.2" fill="#ffffff" stroke="#e2e2e7" stroke-width="0.7"/>
+<polygon points="333.2,208.1 376.2,207.0" fill="#ffffff" stroke="#e2e2e7" stroke-width="0.7"/>
+<polygon points="387.1,185.6 332.8,186.3" fill="#ffffff" stroke="#e2e2e7" stroke-width="0.7"/>
+<polygon points="313.5,126.2 331.7,126.1" fill="#ffffff" stroke="#e2e2e7" stroke-width="0.7"/>
+<polygon points="310.8,8.4 329.9,21.1" fill="#ffffff" stroke="#e2e2e7" stroke-width="0.7"/>
+<polygon points="311.7,49.7 330.4,49.6" fill="#ffffff" stroke="#e2e2e7" stroke-width="0.7"/>
+<polygon points="-278.3,44.3 47.7,41.0 241.3,75.1 301.6,85.8 301.6,87.0" fill="#ffffff" stroke="#e2e2e7" stroke-width="0.7"/>
+<polygon points="301.6,87.0 305.8,86.9" fill="#ffffff" stroke="#e2e2e7" stroke-width="0.7"/>
+<polygon points="301.6,85.8 305.8,85.8" fill="#ffffff" stroke="#e2e2e7" stroke-width="0.7"/>
+<polygon points="305.8,85.8 305.8,86.9 305.8,87.9 305.9,89.4" fill="#ffffff" stroke="#e2e2e7" stroke-width="0.7"/>
+<polygon points="309.5,87.9 305.8,87.9" fill="#ffffff" stroke="#e2e2e7" stroke-width="0.7"/>
+<polygon points="305.9,89.4 309.6,89.4" fill="#ffffff" stroke="#e2e2e7" stroke-width="0.7"/>
+<polygon points="309.5,87.9 309.6,89.4" fill="#ffffff" stroke="#e2e2e7" stroke-width="0.7"/>
+<polygon points="436.8,86.2 486.3,85.6 533.4,84.9 532.9,61.5" fill="#ffffff" stroke="#e2e2e7" stroke-width="0.7"/>
+<polygon points="309.6,91.4 313.8,91.4" fill="#ffffff" stroke="#e2e2e7" stroke-width="0.7"/>
+<polygon points="313.8,91.4 331.0,91.2 369.4,90.6 411.3,89.9 438.2,89.5 487.4,88.7 535.4,87.9 535.2,61.3" fill="#ffffff" stroke="#e2e2e7" stroke-width="0.7"/>
+<polygon points="309.6,89.4 309.6,90.0 309.6,91.4" fill="#ffffff" stroke="#e2e2e7" stroke-width="0.7"/>
+<polygon points="313.8,91.4 313.8,90.0" fill="#ffffff" stroke="#e2e2e7" stroke-width="0.7"/>
+<polygon points="309.6,90.0 313.8,90.0" fill="#ffffff" stroke="#e2e2e7" stroke-width="0.7"/>
+<polygon points="436.8,86.2 436.6,62.5" fill="#ffffff" stroke="#e2e2e7" stroke-width="0.7"/>
+<polygon points="486.3,85.6 485.6,62.0" fill="#ffffff" stroke="#e2e2e7" stroke-width="0.7"/>
+<polygon points="487.4,88.7 487.0,62.0" fill="#ffffff" stroke="#e2e2e7" stroke-width="0.7"/>
+<polygon points="438.2,89.5 438.2,62.5" fill="#ffffff" stroke="#e2e2e7" stroke-width="0.7"/>
+<polygon points="309.5,87.9 369.3,87.1 436.8,86.2" fill="#ffffff" stroke="#e2e2e7" stroke-width="0.7"/>
+<polygon points="411.3,89.9 411.4,62.8" fill="#ffffff" stroke="#e2e2e7" stroke-width="0.7"/>
+<polygon points="242.7,67.3 241.3,75.1" fill="#ffffff" stroke="#e2e2e7" stroke-width="0.7"/>
+</g>
+<polygon points="306.0,88.0 334.0,88.0 334.0,104.0 306.0,104.0" fill="#0071e3" fill-opacity="0.9" stroke="#0071e3" stroke-width="2" stroke-linejoin="round"/>
+<g><rect x="309.2" y="115.4" width="24.2" height="13" rx="6.5" fill="#ffffff" stroke="#c7c7cf" stroke-width="0.8"/><text x="321.3" y="125.3" font-family="system-ui,-apple-system,sans-serif" font-size="8" font-weight="600" text-anchor="middle" fill="#3a3a3e">F10</text></g>
+<g><rect x="303.6" y="39.8" width="24.2" height="13" rx="6.5" fill="#ffffff" stroke="#c7c7cf" stroke-width="0.8"/><text x="315.7" y="49.7" font-family="system-ui,-apple-system,sans-serif" font-size="8" font-weight="600" text-anchor="middle" fill="#3a3a3e">F12</text></g>
+<g><rect x="309.8" y="170.0" width="18.8" height="13" rx="6.5" fill="#ffffff" stroke="#c7c7cf" stroke-width="0.8"/><text x="319.2" y="179.9" font-family="system-ui,-apple-system,sans-serif" font-size="8" font-weight="600" text-anchor="middle" fill="#3a3a3e">F8</text></g>
+<g><rect x="302.6" y="8.8" width="24.2" height="13" rx="6.5" fill="#ffffff" stroke="#c7c7cf" stroke-width="0.8"/><text x="314.7" y="18.7" font-family="system-ui,-apple-system,sans-serif" font-size="8" font-weight="600" text-anchor="middle" fill="#3a3a3e">F14</text></g>
+<g><rect x="362.9" y="173.0" width="18.8" height="13" rx="6.5" fill="#ffffff" stroke="#c7c7cf" stroke-width="0.8"/><text x="372.3" y="182.9" font-family="system-ui,-apple-system,sans-serif" font-size="8" font-weight="600" text-anchor="middle" fill="#3a3a3e">F9</text></g>
+<text x="320.0" y="80.0" font-family="system-ui,-apple-system,sans-serif" font-size="11" font-weight="700" text-anchor="middle" fill="#0071e3" paint-order="stroke" stroke="#f7f7f9" stroke-width="3.5">Delta Sky Club</text>
+<g opacity="0.75"><line x1="12" y1="180.0" x2="62.0" y2="180.0" stroke="#86868b" stroke-width="1.4"/><text x="12" y="176.0" font-family="system-ui,-apple-system,sans-serif" font-size="7.5" fill="#86868b">50 m</text></g>
+</svg>

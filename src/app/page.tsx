@@ -1,31 +1,18 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useMemo } from "react";
+import { Check, Map } from "lucide-react";
 import SearchBar from "@/components/SearchBar";
 import LoungeList from "@/components/LoungeList";
+import WalletSheet from "@/components/WalletSheet";
 import { lounges, type Lounge } from "@/data/lounges";
-
-/**
- * Airport filters match the code exactly; brand filters match the name.
- * Without that split, "SEA" also matches JFK's *Chel*sea* Lounge.
- */
-const FILTERS: { label: string; kind: "all" | "airport" | "brand" }[] = [
-  { label: "All", kind: "all" },
-  { label: "JFK", kind: "airport" },
-  { label: "LAX", kind: "airport" },
-  { label: "SFO", kind: "airport" },
-  { label: "ORD", kind: "airport" },
-  { label: "DFW", kind: "airport" },
-  { label: "ATL", kind: "airport" },
-  { label: "SEA", kind: "airport" },
-  { label: "Delta", kind: "brand" },
-  { label: "United", kind: "brand" },
-  { label: "Admirals", kind: "brand" },
-  { label: "Centurion", kind: "brand" },
-  { label: "Alaska", kind: "brand" },
-];
+import { hasMap } from "@/lib/positions";
+import { verdictFor } from "@/lib/access";
+import { FILTERS, listKey, updateListState, useListState } from "@/lib/list-state";
+import { useWallet } from "@/lib/wallet";
 
 const AIRPORT_COUNT = new Set(lounges.map((l) => l.airportCode)).size;
+const MAP_COUNT = lounges.filter((l) => hasMap(l.id)).length;
 
 /**
  * Lower is better. Without this an airport code like "sea" ranks Chelsea
@@ -47,11 +34,31 @@ function rank(lounge: Lounge, term: string): number {
 }
 
 export default function Home() {
-  const [searchTerm, setSearchTerm] = useState("");
-  const [activeFilter, setActiveFilter] = useState<string>("All");
+  // Search, filter and toggles live in the URL (`/?q=dfw`), not in component
+  // state, so opening a lounge and coming back returns to the same results.
+  const list = useListState();
+  const { q: searchTerm, filter: activeFilter, mine: onlyMine, plans: onlyPlans } = list;
+  const { credentials, ready } = useWallet();
+
+  const hasWallet = ready && credentials.size > 0;
+
+  const enterableCount = useMemo(
+    () => (hasWallet ? lounges.filter((l) => verdictFor(l.access, credentials).status === "in").length : 0),
+    [credentials, hasWallet]
+  );
 
   const filteredLounges = useMemo(() => {
     let result = lounges;
+
+    // Guarded on `hasWallet` so an emptied wallet cannot leave the list stuck
+    // showing nothing with no visible filter to explain it.
+    if (onlyMine && hasWallet) {
+      result = result.filter((l) => verdictFor(l.access, credentials).status === "in");
+    }
+
+    if (onlyPlans) {
+      result = result.filter((l) => hasMap(l.id));
+    }
 
     const filter = FILTERS.find((f) => f.label === activeFilter);
     if (filter && filter.kind !== "all") {
@@ -72,11 +79,10 @@ export default function Home() {
     }
 
     return result;
-  }, [searchTerm, activeFilter]);
+  }, [searchTerm, activeFilter, onlyMine, onlyPlans, hasWallet, credentials]);
 
   const handleFilter = (filter: string) => {
-    setActiveFilter((current) => (current === filter ? "All" : filter));
-    setSearchTerm("");
+    updateListState({ filter: activeFilter === filter ? "All" : filter, q: "" });
   };
 
   return (
@@ -103,12 +109,51 @@ export default function Home() {
           </p>
 
           <div className="mt-10">
-            <SearchBar searchTerm={searchTerm} onSearchChange={setSearchTerm} />
+            <SearchBar searchTerm={searchTerm} onSearchChange={(q) => updateListState({ q })} />
           </div>
+
+          <div className="mt-5 flex justify-center">
+            <WalletSheet compact />
+          </div>
+          <p className="mx-auto mt-3 max-w-sm text-[13px] leading-relaxed text-ink-tertiary">
+            {hasWallet
+              ? `Your cards and status open ${enterableCount} of these ${lounges.length} lounges.`
+              : "Tell us what you carry and every lounge will say whether you can walk in."}
+          </p>
         </section>
 
         <nav aria-label="Quick filters" className="no-scrollbar -mx-5 overflow-x-auto px-5 pb-2">
           <div className="flex w-max gap-2 pb-1">
+            {hasWallet && (
+              <button
+                type="button"
+                onClick={() => updateListState({ mine: !onlyMine })}
+                aria-pressed={onlyMine}
+                className={`inline-flex h-9 shrink-0 items-center gap-1.5 rounded-full px-4 text-[14px] font-medium transition-colors duration-200 ${
+                  onlyMine
+                    ? "bg-emerald-600 text-white"
+                    : "bg-surface text-ink-secondary ring-1 ring-hairline hover:text-ink"
+                }`}
+              >
+                <Check size={14} strokeWidth={2.5} aria-hidden="true" />
+                I can enter
+                <span className="tabular-nums opacity-70">{enterableCount}</span>
+              </button>
+            )}
+            <button
+              type="button"
+              onClick={() => updateListState({ plans: !onlyPlans })}
+              aria-pressed={onlyPlans}
+              className={`inline-flex h-9 shrink-0 items-center gap-1.5 rounded-full px-4 text-[14px] font-medium transition-colors duration-200 ${
+                onlyPlans
+                  ? "bg-ink text-white"
+                  : "bg-surface text-ink-secondary ring-1 ring-hairline hover:text-ink"
+              }`}
+            >
+              <Map size={14} strokeWidth={2} aria-hidden="true" />
+              Map
+              <span className="tabular-nums opacity-70">{MAP_COUNT}</span>
+            </button>
             {FILTERS.map(({ label }) => {
               const active = activeFilter === label;
               return (
@@ -130,17 +175,26 @@ export default function Home() {
           </div>
         </nav>
 
-        <div className="mt-10 mb-6 flex items-baseline justify-between">
-          <h2 className="text-title text-[24px] text-ink">
-            {activeFilter === "All" ? "All lounges" : `${activeFilter} lounges`}
+        {/* The anchor a lounge page's back link aims at; the margin keeps the
+            heading clear of the sticky header. */}
+        <div id="results" className="mt-10 mb-6 flex scroll-mt-16 items-baseline justify-between">
+          {/* Name the search when there is one. A back link can land here with
+              the search box scrolled out of view, and "All lounges" above
+              sixteen DFW cards reads as a broken filter. */}
+          <h2 className="text-title min-w-0 truncate pr-4 text-[24px] text-ink">
+            {searchTerm.trim()
+              ? `Results for “${searchTerm.trim()}”`
+              : activeFilter === "All"
+                ? "All lounges"
+                : `${activeFilter} lounges`}
           </h2>
-          <span className="text-[13px] tabular-nums text-ink-tertiary">
+          <span className="shrink-0 text-[13px] tabular-nums text-ink-tertiary">
             {filteredLounges.length}{" "}
             {filteredLounges.length === 1 ? "result" : "results"}
           </span>
         </div>
 
-        <LoungeList lounges={filteredLounges} />
+        <LoungeList lounges={filteredLounges} stateKey={listKey(list)} />
       </main>
 
       <footer className="mt-24 border-t border-hairline">

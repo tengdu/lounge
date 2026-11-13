@@ -18,10 +18,13 @@ export function blurFor(imageUrl: string): string | undefined {
   return imagePlaceholders[imageUrl];
 }
 
+/** Must match `basePath` in next.config.ts — client code cannot read it from there. */
+export const BASE_PATH = "/lounge";
+
 /**
- * `basePath` is `/lounge`, and next/image does not prefix a raw string src,
- * so every image path has to carry it explicitly.
+ * next/image does not prefix a raw string src with the base path, so every
+ * image path has to carry it explicitly.
  */
 export function withBasePath(path: string): string {
-  return `/lounge${path}`;
+  return `${BASE_PATH}${path}`;
 }
