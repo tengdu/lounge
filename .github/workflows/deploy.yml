@@ -1,80 +1,94 @@
-name: Deploy Next.js site to Pages
+name: Deploy to Cloudflare Pages
+
+# Builds the static export in GitHub Actions and uploads `out/` to Cloudflare
+# Pages ("Direct Upload"). Pushes to main go to production; pull requests get
+# their own preview URL.
+#
+# Needs, in repo Settings → Secrets and variables → Actions:
+#   secret   CLOUDFLARE_API_TOKEN   token with Account › Cloudflare Pages › Edit
+#   variable CLOUDFLARE_ACCOUNT_ID
+#   variable CLOUDFLARE_PAGES_PROJECT   e.g. "lounge"
+#   variable NEXT_PUBLIC_SITE_URL       e.g. "https://lounge-xxx.pages.dev"
+#   variable NEXT_PUBLIC_SUPABASE_URL / NEXT_PUBLIC_SUPABASE_ANON_KEY
 
 on:
   push:
     branches: ["main"]
+  pull_request:
   workflow_dispatch:
 
 permissions:
   contents: read
-  pages: write
-  id-token: write
+  deployments: write
 
 concurrency:
-  group: "pages"
-  cancel-in-progress: false
+  group: cloudflare-pages-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
-  build:
+  deploy:
     runs-on: ubuntu-latest
+    # Forked PRs get no secrets; skip rather than fail.
+    if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-      - name: Detect package manager
-        id: detect-package-manager
+      - name: Check configuration
+        env:
+          TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          ACCOUNT: ${{ vars.CLOUDFLARE_ACCOUNT_ID }}
+          PROJECT: ${{ vars.CLOUDFLARE_PAGES_PROJECT }}
         run: |
-          if [ -f "${{ github.workspace }}/yarn.lock" ]; then
-            echo "manager=yarn" >> $GITHUB_OUTPUT
-            echo "command=install" >> $GITHUB_OUTPUT
-            echo "runner=yarn" >> $GITHUB_OUTPUT
-            exit 0
-          elif [ -f "${{ github.workspace }}/package.json" ]; then
-            echo "manager=npm" >> $GITHUB_OUTPUT
-            echo "command=ci" >> $GITHUB_OUTPUT
-            echo "runner=npx --no-install" >> $GITHUB_OUTPUT
-            exit 0
-          else
-            echo "Unable to determine package manager"
+          missing=""
+          [ -n "$TOKEN" ]   || missing="$missing secret:CLOUDFLARE_API_TOKEN"
+          [ -n "$ACCOUNT" ] || missing="$missing var:CLOUDFLARE_ACCOUNT_ID"
+          [ -n "$PROJECT" ] || missing="$missing var:CLOUDFLARE_PAGES_PROJECT"
+          if [ -n "$missing" ]; then
+            echo "::error::Missing repo settings:$missing"
             exit 1
           fi
+
+      - name: Checkout
+        uses: actions/checkout@v4
+
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
           node-version: "20"
-          cache: ${{ steps.detect-package-manager.outputs.manager }}
-      - name: Setup Pages
-        uses: actions/configure-pages@v5
-        with:
-          static_site_generator: next
-      - name: Restore cache
+          cache: npm
+
+      - name: Restore Next.js cache
         uses: actions/cache@v4
         with:
-          path: |
-            .next/cache
-          key: ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json', '**/yarn.lock') }}-${{ hashFiles('**.[jt]s', '**.[jt]sx') }}
+          path: .next/cache
+          key: ${{ runner.os }}-nextjs-${{ hashFiles('package-lock.json') }}-${{ hashFiles('**.[jt]s', '**.[jt]sx') }}
           restore-keys: |
-            ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json', '**/yarn.lock') }}-
+            ${{ runner.os }}-nextjs-${{ hashFiles('package-lock.json') }}-
+
       - name: Install dependencies
-        run: ${{ steps.detect-package-manager.outputs.manager }} ${{ steps.detect-package-manager.outputs.command }}
-      - name: Build with Next.js
-        run: ${{ steps.detect-package-manager.outputs.runner }} next build
+        run: npm ci
+
+      - name: Build
+        run: npx --no-install next build
         env:
           # Public by design (inlined into the browser bundle); RLS guards the
           # data. Unset, the site builds without reviews and photos.
           NEXT_PUBLIC_SUPABASE_URL: ${{ vars.NEXT_PUBLIC_SUPABASE_URL }}
           NEXT_PUBLIC_SUPABASE_ANON_KEY: ${{ vars.NEXT_PUBLIC_SUPABASE_ANON_KEY }}
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
-        with:
-          path: ./out
+          NEXT_PUBLIC_SITE_URL: ${{ vars.NEXT_PUBLIC_SITE_URL }}
 
-  deploy:
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    runs-on: ubuntu-latest
-    needs: build
-    steps:
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
+      - name: Deploy
+        id: deploy
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ vars.CLOUDFLARE_ACCOUNT_ID }}
+          wranglerVersion: "4"
+          # First run creates the project; later runs see it exists and move on.
+          preCommands: npx wrangler pages project create "${{ vars.CLOUDFLARE_PAGES_PROJECT }}" --production-branch=main || true
+          command: pages deploy out --project-name="${{ vars.CLOUDFLARE_PAGES_PROJECT }}" --branch="${{ github.head_ref || github.ref_name }}" --commit-dirty=true
+
+      - name: Summary
+        run: |
+          echo "### Deployed to Cloudflare Pages" >> "$GITHUB_STEP_SUMMARY"
+          echo "" >> "$GITHUB_STEP_SUMMARY"
+          echo "- URL: ${{ steps.deploy.outputs.deployment-url }}" >> "$GITHUB_STEP_SUMMARY"
+          echo "- Branch: ${{ github.head_ref || github.ref_name }}" >> "$GITHUB_STEP_SUMMARY"

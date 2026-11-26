@@ -1,0 +1,58 @@
+name: Point old GitHub Pages URLs at the new site
+
+# Run once by hand after the site is live on Cloudflare Pages. It replaces the
+# old tengdu.github.io/lounge build with pages that forward every URL to the
+# same path on NEXT_PUBLIC_SITE_URL. Re-run it whenever the domain changes.
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check target
+        env:
+          SITE: ${{ vars.NEXT_PUBLIC_SITE_URL }}
+        run: |
+          case "$SITE" in https://*) ;; *) echo "::error::Set repo variable NEXT_PUBLIC_SITE_URL to the new https origin first"; exit 1;; esac
+
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: npm
+
+      - run: npm ci
+
+      # Built only to enumerate every page path; none of it is published.
+      - run: npx --no-install next build
+
+      - run: node scripts/make-redirect-site.mjs out "${{ vars.NEXT_PUBLIC_SITE_URL }}" redirect-site
+
+      - uses: actions/configure-pages@v5
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: ./redirect-site
+
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

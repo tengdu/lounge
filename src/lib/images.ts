@@ -18,8 +18,12 @@ export function blurFor(imageUrl: string): string | undefined {
   return imagePlaceholders[imageUrl];
 }
 
-/** Must match `basePath` in next.config.ts — client code cannot read it from there. */
-export const BASE_PATH = "/lounge";
+/**
+ * Must match `basePath` in next.config.ts — client code cannot read it from
+ * there. Empty since the site moved to its own origin on Cloudflare Pages;
+ * kept so every asset path still goes through one place if that changes.
+ */
+export const BASE_PATH = "";
 
 /**
  * next/image does not prefix a raw string src with the base path, so every

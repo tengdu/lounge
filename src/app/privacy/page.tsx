@@ -125,7 +125,7 @@ export default function PrivacyPage() {
             <a href="https://supabase.com/privacy" target="_blank" rel="noopener noreferrer">
               Supabase
             </a>{" "}
-            in the United States. The website itself is served by GitHub Pages. We keep your data
+            in the United States. The website itself is served by Cloudflare Pages. We keep your data
             until you delete it or ask us to.
           </p>
         </Section>
