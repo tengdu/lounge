@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Script from "next/script";
 import { Geist } from "next/font/google";
 import "./globals.css";
+import { SITE_URL } from "@/lib/site";
 
 // Geist_Mono was loaded but never applied to anything — dropping it removes
 // a font payload from every page.
@@ -12,6 +13,7 @@ const geistSans = Geist({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL(SITE_URL),
   title: "Lounge — Every airport lounge in the US",
   description: "Find every airport lounge in the United States — locations, amenities, and access rules.",
   keywords: [
@@ -35,7 +37,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Lounge — Every airport lounge in the US",
     description: "Find every airport lounge in the United States — locations, amenities, and access rules.",
-    url: "https://lounge.com",
+    url: "/",
     siteName: "Lounge",
     locale: "en_US",
     type: "website",
