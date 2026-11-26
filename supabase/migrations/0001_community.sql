@@ -32,6 +32,7 @@ create or replace function public.short_name(full_name text, email text)
 returns text
 language sql
 immutable
+set search_path = ''
 as $$
   select case
     when coalesce(trim(full_name), '') = '' then split_part(coalesce(email, 'Traveller'), '@', 1)
@@ -131,6 +132,7 @@ create policy "Delete your own review, or moderate" on public.reviews
 create or replace function public.touch_updated_at()
 returns trigger
 language plpgsql
+set search_path = ''
 as $$
 begin
   new.updated_at := now();
@@ -248,6 +250,12 @@ grant select on public.profiles, public.reviews, public.photos, public.lounge_ra
 grant insert, delete on public.reviews, public.photos to authenticated;
 grant update (rating, body, visited_on) on public.reviews to authenticated;
 grant update (status, moderated_at) on public.photos to authenticated;
+
+-- Trigger functions fire on their own; nobody needs to call them via /rpc.
+-- is_admin() stays callable: the photo policies evaluate it for every caller,
+-- and all it reveals is whether you yourself are a moderator.
+revoke execute on function public.handle_new_user() from public, anon, authenticated;
+revoke execute on function public.limit_photo_uploads() from public, anon, authenticated;
 
 -- ─── Storage ───────────────────────────────────────────────────────────────
 -- Public read keeps photos on the CDN with no signed-URL round trip. Paths are
