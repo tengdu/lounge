@@ -2,12 +2,13 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { Check, Map } from "lucide-react";
+import { Check, Map, Star } from "lucide-react";
 import { Lounge } from "@/data/lounges";
 import { hasMap } from "@/lib/positions";
 import { blurFor, cardSrc, withBasePath } from "@/lib/images";
 import { verdictFor } from "@/lib/access";
 import { useWallet } from "@/lib/wallet";
+import { useCommunityRating } from "@/lib/community-ratings";
 
 interface LoungeCardProps {
   lounge: Lounge;
@@ -18,6 +19,7 @@ interface LoungeCardProps {
 export default function LoungeCard({ lounge, eager = false }: LoungeCardProps) {
   const blur = blurFor(lounge.imageUrl);
   const { credentials, ready } = useWallet();
+  const community = useCommunityRating(lounge.id);
   const youreIn = ready && credentials.size > 0 && verdictFor(lounge.access, credentials).status === "in";
 
   return (
@@ -71,9 +73,25 @@ export default function LoungeCard({ lounge, eager = false }: LoungeCardProps) {
               </span>
             )}
           </span>
-          <span className="shrink-0 text-[13px] font-medium tabular-nums text-ink-secondary">
-            {lounge.rating.toFixed(1)}
-          </span>
+          {/* Real traveller ratings once there are enough of them; until then
+              the editorial tier estimate, labelled as such on hover. */}
+          {community ? (
+            <span
+              title={`${community.average.toFixed(1)} from ${community.count} traveller reviews`}
+              className="inline-flex shrink-0 items-center gap-1 text-[13px] font-medium tabular-nums text-ink"
+            >
+              <Star size={12} fill="currentColor" strokeWidth={0} aria-hidden="true" className="text-amber-500" />
+              {community.average.toFixed(1)}
+              <span className="font-normal text-ink-tertiary">({community.count})</span>
+            </span>
+          ) : (
+            <span
+              title="Editorial estimate — not enough traveller reviews yet"
+              className="shrink-0 text-[13px] font-medium tabular-nums text-ink-secondary"
+            >
+              {lounge.rating.toFixed(1)}
+            </span>
+          )}
         </div>
       </div>
     </Link>

@@ -160,6 +160,17 @@ export async function fetchRatingSummary(loungeId: string): Promise<RatingSummar
   };
 }
 
+/** Every lounge's average and count, for the list cards. One small query. */
+export async function fetchAllRatings(): Promise<Map<string, { average: number; count: number }>> {
+  const { data, error } = await client()
+    .from("lounge_ratings")
+    .select("lounge_id, avg_rating, review_count");
+  if (error) throw friendly(error);
+  return new Map(
+    (data ?? []).map((r) => [r.lounge_id as string, { average: r.avg_rating as number, count: r.review_count as number }])
+  );
+}
+
 // ─── Reviews ──────────────────────────────────────────────────────────────
 
 export async function fetchReviews(

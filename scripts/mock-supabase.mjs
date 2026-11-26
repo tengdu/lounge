@@ -33,6 +33,7 @@ const profiles = new Map([
   [DEMO.id, { id: DEMO.id, display_name: "Demo T.", avatar_url: null, is_admin: true }],
   ["u-maya", { id: "u-maya", display_name: "Maya R.", avatar_url: null, is_admin: false }],
   ["u-sam", { id: "u-sam", display_name: "Sam K.", avatar_url: null, is_admin: false }],
+  ["u-lee", { id: "u-lee", display_name: "Lee W.", avatar_url: null, is_admin: false }],
 ]);
 const reviews = [];
 const photos = [];
@@ -53,6 +54,11 @@ function seed() {
       id: crypto.randomUUID(), lounge_id: SEED_LOUNGE, user_id: "u-sam", rating: 2,
       body: "Packed at 5pm — waited 20 minutes for a seat.",
       visited_on: null, created_at: at(40), updated_at: at(39),
+    },
+    {
+      id: crypto.randomUUID(), lounge_id: SEED_LOUNGE, user_id: "u-lee", rating: 5,
+      body: "Best view of the apron at BWI. Staff were lovely.",
+      visited_on: at(60).slice(0, 10), created_at: at(58), updated_at: at(58),
     }
   );
   const add = (name, reviewId, daysAgo) => {
