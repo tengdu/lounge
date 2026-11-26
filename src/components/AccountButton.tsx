@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
-import { LogIn, LogOut, ShieldCheck } from "lucide-react";
+import { LogIn, LogOut, Shield, ShieldCheck } from "lucide-react";
 import { signInWithGoogle, signOut, useAuth } from "@/lib/auth";
 import { communityEnabled } from "@/lib/supabase";
 import Avatar from "@/components/Avatar";
@@ -82,6 +82,15 @@ export default function AccountButton() {
               Photo queue
             </Link>
           )}
+          <Link
+            role="menuitem"
+            href="/privacy"
+            onClick={() => setOpen(false)}
+            className="flex items-center gap-2.5 px-4 py-2 text-ink transition-colors hover:bg-surface-sunken"
+          >
+            <Shield size={15} aria-hidden="true" />
+            Privacy policy
+          </Link>
           <button
             role="menuitem"
             type="button"

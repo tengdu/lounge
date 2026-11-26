@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo } from "react";
+import Link from "next/link";
 import { Check, Map } from "lucide-react";
 import SearchBar from "@/components/SearchBar";
 import LoungeList from "@/components/LoungeList";
@@ -203,8 +204,11 @@ export default function Home() {
             Lounge locations and access rules change frequently — confirm with your airline or
             lounge operator before you travel.
           </p>
-          <p className="mt-3 text-[12px] text-ink-tertiary">
-            © {new Date().getFullYear()} Lounge
+          <p className="mt-3 flex gap-4 text-[12px] text-ink-tertiary">
+            <span>© {new Date().getFullYear()} Lounge</span>
+            <Link href="/privacy" className="underline underline-offset-2 transition-colors hover:text-ink-secondary">
+              Privacy
+            </Link>
           </p>
         </div>
       </footer>

@@ -35,7 +35,8 @@ immutable
 set search_path = ''
 as $$
   select case
-    when coalesce(trim(full_name), '') = '' then split_part(coalesce(email, 'Traveller'), '@', 1)
+    -- Never fall back to the email: it is private, the name is public.
+    when coalesce(trim(full_name), '') = '' then 'Traveller'
     when position(' ' in trim(full_name)) = 0 then trim(full_name)
     else split_part(trim(full_name), ' ', 1) || ' ' ||
          upper(left(regexp_replace(trim(full_name), '^.* ', ''), 1)) || '.'

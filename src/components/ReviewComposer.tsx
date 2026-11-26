@@ -2,6 +2,7 @@
 /* eslint-disable @next/next/no-img-element -- previews are local blob: URLs */
 
 import { useCallback, useEffect, useRef, useState } from "react";
+import Link from "next/link";
 import { ImagePlus, LogIn, X } from "lucide-react";
 import {
   PHOTOS_PER_REVIEW,
@@ -181,6 +182,15 @@ export default function ReviewComposer({
                 <LogIn size={15} aria-hidden="true" />
                 Continue with Google
               </button>
+            )}
+            {auth.status === "signed-out" && (
+              <p className="mt-4 text-[12px] text-ink-tertiary">
+                We get your name, email and profile picture from Google. Only your first name,
+                last initial and picture are shown publicly.{" "}
+                <Link href="/privacy" className="underline underline-offset-2 hover:text-ink-secondary">
+                  Privacy policy
+                </Link>
+              </p>
             )}
           </div>
         ) : (
