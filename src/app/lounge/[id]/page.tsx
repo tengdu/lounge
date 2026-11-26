@@ -27,7 +27,9 @@ import { AMENITY_CATALOG, lounges, type Amenity } from "@/data/lounges";
 import { positionFor } from "@/lib/positions";
 import { blurFor, heroSrc, withBasePath } from "@/lib/images";
 import AccessPanel from "@/components/AccessPanel";
+import AccountButton from "@/components/AccountButton";
 import BackToList from "@/components/BackToList";
+import CommunitySection from "@/components/CommunitySection";
 import GettingThere from "@/components/GettingThere";
 import PhotoNotice from "@/components/PhotoNotice";
 
@@ -105,8 +107,9 @@ export default async function LoungeDetailPage({
   return (
     <>
       <header className="sticky top-0 z-50 border-b border-hairline bg-canvas/72 backdrop-blur-xl backdrop-saturate-150">
-        <div className="mx-auto flex h-12 max-w-5xl items-center px-5">
+        <div className="mx-auto flex h-12 max-w-5xl items-center justify-between gap-4 px-5">
           <BackToList />
+          <AccountButton />
         </div>
       </header>
 
@@ -213,6 +216,8 @@ export default async function LoungeDetailPage({
                   </p>
                 )}
               </section>
+
+              <CommunitySection loungeId={lounge.id} loungeName={lounge.name} />
 
               {nearby.length > 0 && (
                 <section>

@@ -1,6 +1,8 @@
 import { Camera } from "lucide-react";
 import type { Lounge } from "@/data/lounges";
 import { photoContributionUrl } from "@/lib/links";
+import { communityEnabled } from "@/lib/supabase";
+import ContributePhotoButton from "@/components/ContributePhotoButton";
 
 /**
  * What the reader is actually looking at, plus the attribution the CC licenses
@@ -48,6 +50,9 @@ export default function PhotoNotice({ lounge }: { lounge: Lounge }) {
         )}
       </p>
 
+      {communityEnabled ? (
+        <ContributePhotoButton label={photo ? "Add a photo" : "Contribute a photo"} />
+      ) : (
       <a
         href={photoContributionUrl(lounge)}
         target="_blank"
@@ -57,6 +62,7 @@ export default function PhotoNotice({ lounge }: { lounge: Lounge }) {
         <Camera size={13} strokeWidth={1.8} aria-hidden="true" />
         {photo ? "Add a photo" : "Contribute a photo"}
       </a>
+      )}
     </div>
   );
 }
